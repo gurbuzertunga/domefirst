@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/9a2f12287f.js" crossorigin="anonymous"></script>
     <title>Do Me First - TO DO APP</title>
   </head>
   <body>
@@ -10,25 +11,25 @@
       <div class="app">
         <h1>DoMeFirst</h1>
         <div class="container flex justify-between">
-          <div class="left">
+          <div class="left grid grid-cols-2">
             <div class="completed">
+                <p>COMPLETED TO-DOS</p>
               <ul>
-                  <li>Task1<i class="fas fa-trash" aria-hidden="true"></i></li>
+                  <li>Task1<i class="fas fa-trash"></i></li>
                   <li>Task2</li>
                   <li>Task3</li>
                   <li>Task4</li>
                 </ul>
             </div>
             <div class="ongoing">
-              <ul>
-                <li>Task1</li>
-                <li>Task2</li>
-                <li>Task3</li>
-                <li>Task4</li>
+              <p>ONGOING TO-DOS</p>
+              <ul id="ongoing-todos">
               </ul>
             </div>
-            <i class="fas fa-plus" aria-hidden="true"></i>
+            <div class="addToDo">
             <input type="text" name="addTask" id="addTask" placeholder="Add your to do task">
+            <i class="fas fa-plus-circle" id="addTaskConfirm"></i>
+          </div>
           </div>
           <div class="right">
             <div class="projects">
