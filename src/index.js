@@ -1,6 +1,5 @@
 import './styles.css';
 import addToDo from './components/todo-logic.js';
-import addProject from './components/project-logic.js';
+import { newProjects } from './components/todo-logic.js'
 addToDo();
-addProject();
-// addProject();
+newProjects();
