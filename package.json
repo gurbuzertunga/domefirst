@@ -23,6 +23,7 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "autoprefixer": "^10.1.0",
     "css-loader": "^5.0.1",
     "postcss": "^8.2.1",

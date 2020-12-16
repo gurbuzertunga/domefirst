@@ -1,11 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Do Me First - TO DO APP</title>
-</head>
-<body>
+  </head>
+  <body>
+    <section class="main-content">
+      <div class="app">
+        <h1>DoMeFirst</h1>
+        <div class="container flex justify-between">
+          <div class="left">
+            <div class="completed">
+              <ul>
+                  <li>Task1<i class="fas fa-trash" aria-hidden="true"></i></li>
+                  <li>Task2</li>
+                  <li>Task3</li>
+                  <li>Task4</li>
+                </ul>
+            </div>
+            <div class="ongoing">
+              <ul>
+                <li>Task1</li>
+                <li>Task2</li>
+                <li>Task3</li>
+                <li>Task4</li>
+              </ul>
+            </div>
+            <i class="fas fa-plus" aria-hidden="true"></i>
+            <input type="text" name="addTask" id="addTask" placeholder="Add your to do task">
+          </div>
+          <div class="right">
+            <div class="projects">
+              <h2>Project</h2>
+              <div class="project">
+                <ul>
+                  <li>Task1</li>
+                  <li>Task2</li>
+                  <li>Task3</li>
+                  <li>Task4</li>
+                </ul>
+              </div>
+              <input type="text" id="addProject" placeholder="Add your project...">
+            </div>
+            
+          </div>
+
+        </div>
+      </div>
+    </section>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
