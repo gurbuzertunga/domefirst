@@ -14,6 +14,10 @@ const toDoSubmit = document.getElementById('submit-todo');
 
 const ongoingToDos = document.getElementById('ongoing-todos');
 
+const selectChange = () => {
+	let selectedOption = toDoPri.options[toDoPri.selectedIndex];
+}
+
 // class ToDoItem {
 // 	constructor(title,description,priority,dueDate,project) {
 // 		this.title = title;
@@ -41,6 +45,9 @@ export default function addToDo() {
 		const newToDo = document.createElement('li');
 		ongoingToDos.appendChild(newToDo);
 		newToDo.textContent = toDos[0].title;
+		const trashIcon = document.createElement('i');
+		trashIcon.setAttribute('class', 'fas fa-trash');
+		newToDo.appendChild(trashIcon);
 	});
 };
 
