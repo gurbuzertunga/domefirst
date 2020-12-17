@@ -15,25 +15,25 @@ class Store {
 	static addToStore (toDo) {
 		toDos = Store.getFromStore();
 		toDos.push(toDo);
-		localStorage.setItem('toDos', JSON.stringify(toDos));
+		localStorage.setItem('localToDos', JSON.stringify(toDos));
 
 		projects = Store.getFromStore();
 		projects.push(toDo);
-		localStorage.setItem('projects', JSON.stringify(projects));
+		localStorage.setItem('localProjects', JSON.stringify(projects));
 
 	}
 
 	static getFromStore() {
-		if(localStorage.getItem(toDos) === null) {
+		if(localStorage.getItem(localToDos) === null) {
 			toDos = [];
 		} else {
-			toDos = JSON.parse(localStorage.getItem(toDos));
+			toDos = JSON.parse(localStorage.getItem(localToDos));
 		}
 
-		if (localStorage.getItem(projects) === null) {
+		if (localStorage.getItem(localProjects) === null) {
 			projects = [];
 		} else {
-			projects = JSON.parse(localStorage.getItem(projects));
+			projects = JSON.parse(localStorage.getItem(localProjects));
 		}
 	}
 
@@ -51,19 +51,18 @@ class Project {
 	}
 }
 
-
-
-
-let projectTitleId = "";
-let defaultProject = new Project('House Chores');
+	let projectTitleId = "";
+	projects.push(new Project('House Chores'));
 	let newProject = document.createElement('li');
 	let formProject = document.createElement('option');			
-	formProject.setAttribute('id',defaultProject.title);
+	formProject.setAttribute('id',projects[0].title);
 	projectList.appendChild(newProject);
 	projectTitles.appendChild(formProject);
-	newProject.textContent = defaultProject.title;
-	formProject.textContent = defaultProject.title;
-	projectTitleId = defaultProject.title;
+	newProject.textContent = projects[0].title;
+	formProject.textContent = projects[0].title;
+	projectTitleId = projects[0].title;
+	localStorage.setItem('Projects', JSON.stringify(projects[0]));
+		
 
 
 
@@ -84,38 +83,27 @@ const selectChangePro = () => {
 });
 }
 
-
-
-
-
-
-
-
-	
-
-
 selectChangePri();
 selectChangePro();
 
-export default function addToDo() {
+function addToDo() {
 	toDoSubmit.addEventListener('click', (e) => {
 		e.preventDefault();
-		 toDos.push(Project.addToDoItem(toDoTitle.value,toDoDesc.value,priValue.value,toDoDate.value,proValue.value));
+		toDos.push(Project.addToDoItem(toDoTitle.value,toDoDesc.value,priValue.value,toDoDate.value,proValue.value));
 		console.log(toDos);
-		const newToDo = document.createElement('li');
-		ongoingToDos.appendChild(newToDo);
-		newToDo.textContent = toDoTitle.value;
-		const trashIcon = document.createElement('i');
-		trashIcon.setAttribute('class', 'fas fa-trash');
-		newToDo.appendChild(trashIcon);
-		
+		localStorage.setItem('toDos', JSON.stringify(toDos))
+		populateDom();
 	});
 };
 
+function removeToDo() {
+	ongoingToDos.addEventListener('click', (e) => {
+		console.log(e.target);
+	})
+}
 
 function newProjects(){
-	
-	newProjectConfirm.addEventListener('click', () => {
+			newProjectConfirm.addEventListener('click', () => {
 			projects.push(new Project(newProjectField.value));
 			newProject = document.createElement('li');
 			formProject = document.createElement('option');			
@@ -125,8 +113,25 @@ function newProjects(){
 			newProject.textContent = newProjectField.value;
 			formProject.textContent = newProjectField.value;
 			projectTitleId = newProjectField.value;
+			localStorage.setItem('Projects', JSON.stringify(projects));
 	})
 };
 
+function populateDom() {
+	while( ongoingToDos.firstChild ){
+		ongoingToDos.removeChild( ongoingToDos.firstChild );
+	  }
+	  console.log(Store.getFromStore());
+	  Array.from(JSON.parse(localStorage.getItem(toDos))).forEach((toDo) => {
+		const newToDo = document.createElement('li');
+		ongoingToDos.appendChild(newToDo);
+		newToDo.textContent = toDo.title;
+		const trashIcon = document.createElement('i');
+		trashIcon.setAttribute('class', 'fas fa-trash');
+		newToDo.appendChild(trashIcon);
+	})
+	
+}
 
-export {newProjects}
+console.log(toDos);
+export {newProjects, addToDo, removeToDo, populateDom}

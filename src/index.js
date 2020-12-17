@@ -1,6 +1,8 @@
 import './styles.css';
-import addToDo from './components/todo-logic.js';
-import { newProjects } from './components/todo-logic.js';
+
+import { newProjects,addToDo, removeToDo, populateDom } from './components/todo-logic.js';
 
 addToDo();
 newProjects();
+removeToDo();
+populateDom();
