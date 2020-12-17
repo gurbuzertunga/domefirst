@@ -1,4 +1,3 @@
-
 const toDos = [];
 const projects = [];
 
@@ -15,22 +14,21 @@ const toDoSubmit = document.getElementById('submit-todo');
 
 const ongoingToDos = document.getElementById('ongoing-todos');
 
-class ToDoItem {
-	constructor(title,description,priority,dueDate,project) {
-		this.title = title;
-		this.description = description;
-		this.priority = priority;
-		this.dueDate = dueDate;
-		this.project = project;
-	};
-}
+// class ToDoItem {
+// 	constructor(title,description,priority,dueDate,project) {
+// 		this.title = title;
+// 		this.description = description;
+// 		this.priority = priority;
+// 		this.dueDate = dueDate;
+// 		this.project = project;
+// 	};
+// }
 
 class Project {
 	constructor(title) {
 			this.title = title;
 	}   
-	addToDoItem = (title,description,priority,dueDate) => {
-		let projectTitle = this.title;
+	static addToDoItem (title,description,priority,dueDate, projectTitle)  {
 		return { title,description,priority,dueDate,projectTitle };
 	}
 }
@@ -38,7 +36,7 @@ class Project {
 export default function addToDo() {
 	toDoSubmit.addEventListener('click', (e) => {
 		e.preventDefault();
-		 toDos.push(new ToDoItem(toDoTitle.value,toDoDesc.value,toDoPri.value,toDoDate.value));
+		 toDos.push(Project.addToDoItem(toDoTitle.value,toDoDesc.value,toDoPri.value,toDoDate.value,));
 		console.log(toDos);
 		const newToDo = document.createElement('li');
 		ongoingToDos.appendChild(newToDo);
@@ -48,7 +46,6 @@ export default function addToDo() {
 
 
 function newProjects(){
-
 	newProjectConfirm.addEventListener('click', () => {
 			projects.push(new Project(newProjectField.value));
 			const newProject = document.createElement('li');
