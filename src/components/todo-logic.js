@@ -29,6 +29,10 @@ class Project {
 	constructor(title) {
 			this.title = title;
 	}   
+	addToDoItem = (title,description,priority,dueDate) => {
+		let projectTitle = this.title;
+		return { title,description,priority,dueDate,projectTitle };
+	}
 }
 
 export default function addToDo() {
