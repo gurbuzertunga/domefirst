@@ -11,6 +11,37 @@ const toDoPri = document.getElementById('priority');
 const toDoDate = document.getElementById('date');
 const toDoSubmit = document.getElementById('submit-todo');
 
+class Store {
+	static addToStore (toDo) {
+		toDos = Store.getFromStore();
+		toDos.push(toDo);
+		localStorage.setItem('toDos', JSON.stringify(toDos));
+
+		projects = Store.getFromStore();
+		projects.push(toDo);
+		localStorage.setItem('projects', JSON.stringify(projects));
+
+	}
+
+	static getFromStore() {
+		if(localStorage.getItem(toDos) === null) {
+			toDos = [];
+		} else {
+			toDos = JSON.parse(localStorage.getItem(toDos));
+		}
+
+		if (localStorage.getItem(projects) === null) {
+			projects = [];
+		} else {
+			projects = JSON.parse(localStorage.getItem(projects));
+		}
+	}
+
+	static renoveFromStore() {
+
+	}
+}
+
 class Project {
 	constructor(title) {
 			this.title = title;
