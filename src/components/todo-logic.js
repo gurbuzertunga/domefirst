@@ -36,7 +36,7 @@ class Project {
 export default function addToDo() {
 	toDoSubmit.addEventListener('click', (e) => {
 		e.preventDefault();
-		 toDos.push(Project.addToDoItem(toDoTitle.value,toDoDesc.value,toDoPri.value,toDoDate.value,));
+		 toDos.push(Project.addToDoItem(toDoTitle.value,toDoDesc.value,toDoPri.value,toDoDate.value,projectTitleId));
 		console.log(toDos);
 		const newToDo = document.createElement('li');
 		ongoingToDos.appendChild(newToDo);
@@ -44,20 +44,23 @@ export default function addToDo() {
 	});
 };
 
-
+let projectTitleId = "";
 function newProjects(){
 	newProjectConfirm.addEventListener('click', () => {
 			projects.push(new Project(newProjectField.value));
 			const newProject = document.createElement('li');
 			const formProject = document.createElement('option');			
-			formProject.setAttribute('id',projects[0].title);
+			formProject.setAttribute('id',newProjectField.value);
 			projectList.appendChild(newProject);
 			projectTitles.appendChild(formProject);
-			newProject.textContent = projects[0].title;
-			formProject.textContent = projects[0].title;
+			newProject.textContent = newProjectField.value;
+			formProject.textContent = newProjectField.value;
+			projectTitleId = newProjectField.value;
 			console.log(projects)
 	})
 };
+
+console.log(projectTitleId);
 // const toDoProjectName = document.getElementById(projects[0].title)
 // console.log(toDoProjectName);
 
