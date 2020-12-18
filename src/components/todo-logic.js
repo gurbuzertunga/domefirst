@@ -140,6 +140,15 @@ function removeToDo() {
 	})
 }
 
+function removeProject() {
+	projectList.addEventListener('click', (e) => {
+		console.log(e.target);
+		if (projectList.classList.contains('fas fa-trash')) {
+			e.target.parentElement.remove();
+		}
+	})
+}
+
 function newProjects() {
 	newProjectConfirm.addEventListener('click', () => {
 		let myNewProject = new Project(newProjectField.value);
