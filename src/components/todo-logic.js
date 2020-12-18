@@ -173,14 +173,16 @@ function populateDom() {
 		newToDo.appendChild(trashIcon);
 	});
 
-	while (projectList.firstChild) {
-		projectList.removeChild(projectList.firstChild);
+	while (projectTitles.firstChild) {
+		projectTitles.removeChild(projectTitles.firstChild);
 	}
-	
+	while (projectList.firstChild) {
+	projectList.removeChild(projectList.firstChild);
+	}
 	Array.from(Store.getProjectFromStore()).forEach((project) => {
 		newProject = document.createElement('li');
 		formProject = document.createElement('option');
-		formProject.setAttribute('id', newProjectField.value);
+		formProject.setAttribute('id', project.title);
 		projectList.appendChild(newProject);
 		projectTitles.appendChild(formProject);
 		newProject.textContent = project.title;
@@ -199,6 +201,14 @@ function removeProject() {
 	projectList.addEventListener('click', (e) => {
 		if (e.target.className === 'fas fa-trash') {
 			Store.removeProjectFromStore(e.target.parentElement.textContent);
+			e.target.parentElement.remove();
+			projectTitles.childNodes.forEach((option) => {
+				console.log(option);
+				console.log(e.target.parentElement.textContent);
+				if (option.textContent === e.target.parentElement.textContent) {
+					option.remove();
+			}
+			});
 		}
 	});
 	// projectList.addEventListener('click', (e) => {
