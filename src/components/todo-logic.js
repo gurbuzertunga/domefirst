@@ -50,17 +50,24 @@ class Store {
 
 	}
 
-	static removeToDoFromStore() {
-
+	static removeToDoFromStore(title) {
+		toDos = Store.getToDoFromStore();
+		toDos.forEach((toDo) => {
+			if (toDo.title === title) {
+				toDos.splice(toDos.indexOf(toDo), 1);
+			}
+		})
+		localStorage.setItem('localToDos',JSON.stringify(toDos));
 	}
 
 	static removeProjectFromStore(title) {
 		projects = Store.getProjectFromStore();
 		projects.forEach((project) => {
 			if (project.title === title) {
-				project.remove();
+				projects.splice(projects.indexOf(project), 1);
 			}
 		});
+		localStorage.setItem('localProjects', JSON.stringify(projects));
 	}
 }
 
@@ -91,8 +98,6 @@ newProject.textContent = projects[0].title;
 formProject.textContent = projects[0].title;
 projectTitleId = projects[0].title;
 }
-
-
 
 while (projectList.firstChild) {
 	projectList.removeChild(projectList.firstChild);
@@ -133,20 +138,40 @@ function addToDo() {
 
 function removeToDo() {
 	ongoingToDos.addEventListener('click', (e) => {
-		console.log(e.target);
-		if (ongoingToDos.classList.contains('fas fa-trash')) {
+		console.log(e.target.parentElement.title)
+		let b = e.target.parentElement.textContent;
+		console.log(b);
+		let a = e.target;
+		// console.log(e.target.parentElement)
+		if (a.className = 'fas fa-trash') {
+			Store.removeToDoFromStore(b);
 			e.target.parentElement.remove();
 		}
 	})
 }
 
 function removeProject() {
-	projectList.addEventListener('click', (e) => {
-		console.log(e.target);
-		if (projectList.classList.contains('fas fa-trash')) {
-			e.target.parentElement.remove();
-		}
+	let liToTrash = document.querySelectorAll("ul#project-list li");
+	
+	console.log(liToTrash);
+	liToTrash.forEach((li) => {
+		console.log('li: ', li );
 	})
+	// for (let i = 0; i < b.length; i++) {
+	// 	console.log(b[i]); 
+
+	// }
+	// Array.from(liToTrash).forEach((li) => {
+	// 	console.log(li);
+	// 	li.addEventListener('click', (e) => {
+	// 		let b = e.target.parentElement.textContent;
+	// 			console.log(e.target);
+	// 		// if (e.target.className = 'fas fa-trash') {
+	// 		// 	Store.removeProjectFromStore(b);
+	// 		// 	e.target.parentElement.remove();
+	// 		// }
+	// 	})
+	// })
 }
 
 function newProjects() {
@@ -175,6 +200,7 @@ function populateDom() {
 	while (projectList.firstChild) {
 		projectList.removeChild(projectList.firstChild);
 	}
+	
 	Array.from(Store.getProjectFromStore()).forEach((project) => {
 		newProject = document.createElement('li');
 		formProject = document.createElement('option');
@@ -184,8 +210,13 @@ function populateDom() {
 		newProject.textContent = project.title;
 		formProject.textContent = project.title;
 		projectTitleId = project.title;
+		if (project.title !== 'House Chores') {
+		const trashIcon = document.createElement('i');
+		trashIcon.setAttribute('class', 'fas fa-trash');
+		newProject.appendChild(trashIcon);
+	}
 	})
 	
 }
 
-export { newProjects, addToDo, removeToDo, populateDom }
+export { newProjects, addToDo, removeToDo, removeProject, populateDom }
