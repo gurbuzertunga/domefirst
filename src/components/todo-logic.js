@@ -134,6 +134,9 @@ function addToDo() {
 function removeToDo() {
 	ongoingToDos.addEventListener('click', (e) => {
 		console.log(e.target);
+		if (ongoingToDos.classList.contains('fas fa-trash')) {
+			e.target.parentElement.remove();
+		}
 	})
 }
 
@@ -158,7 +161,7 @@ function populateDom() {
 		const trashIcon = document.createElement('i');
 		trashIcon.setAttribute('class', 'fas fa-trash');
 		newToDo.appendChild(trashIcon);
-	})
+	});
 
 	while (projectList.firstChild) {
 		projectList.removeChild(projectList.firstChild);
