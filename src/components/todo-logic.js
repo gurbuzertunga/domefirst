@@ -62,9 +62,9 @@ class Store {
 
 	static removeProjectFromStore(title) {
 		projects = Store.getProjectFromStore();
-		projects.forEach((project) => {
-			if (project.title === title) {
-				projects.splice(projects.indexOf(project), 1);
+		projects.forEach((project, index) => {
+			if(project.title === title) {
+				projects.splice(index, 1);
 			}
 		});
 		localStorage.setItem('localProjects', JSON.stringify(projects));
@@ -150,30 +150,6 @@ function removeToDo() {
 	})
 }
 
-function removeProject() {
-	let liToTrash = document.querySelectorAll("ul#project-list li");
-	
-	console.log(liToTrash);
-	liToTrash.forEach((li) => {
-		console.log('li: ', li );
-	})
-	// for (let i = 0; i < b.length; i++) {
-	// 	console.log(b[i]); 
-
-	// }
-	// Array.from(liToTrash).forEach((li) => {
-	// 	console.log(li);
-	// 	li.addEventListener('click', (e) => {
-	// 		let b = e.target.parentElement.textContent;
-	// 			console.log(e.target);
-	// 		// if (e.target.className = 'fas fa-trash') {
-	// 		// 	Store.removeProjectFromStore(b);
-	// 		// 	e.target.parentElement.remove();
-	// 		// }
-	// 	})
-	// })
-}
-
 function newProjects() {
 	newProjectConfirm.addEventListener('click', () => {
 		let myNewProject = new Project(newProjectField.value);
@@ -215,8 +191,21 @@ function populateDom() {
 		trashIcon.setAttribute('class', 'fas fa-trash');
 		newProject.appendChild(trashIcon);
 	}
-	})
+	});
 	
+}
+
+function removeProject() {
+	projectList.addEventListener('click', (e) => {
+		if (e.target.className === 'fas fa-trash') {
+			Store.removeProjectFromStore(e.target.parentElement.textContent);
+		}
+	});
+	// projectList.addEventListener('click', (e) => {
+	// 	if (e.target.className === 'fas fa-trash') { 
+	// 		e.target.parentElement.remove();
+	// 	}
+	// });
 }
 
 export { newProjects, addToDo, removeToDo, removeProject, populateDom }
