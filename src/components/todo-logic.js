@@ -37,7 +37,6 @@ class Store {
 
 	static addToDoToStore(toDo) {
 		toDos = Store.getToDoFromStore();
-		console.log(toDos);
 		toDos.push(toDo);
 
 		localStorage.setItem('localToDos', JSON.stringify(toDos));
@@ -72,7 +71,7 @@ class Store {
 }
 
 class Project {
-	constructor(title ='House Chores') {
+	constructor(title) {
 		this.title = title;
 	}
 	static addToDoItem(title, description, priority, dueDate, projectTitle) {
@@ -82,15 +81,14 @@ class Project {
 let projectTitleId = "";
 
 if (localStorage.getItem('localProjects') === null) {
-const myDefaultProject = new Project();
+const myDefaultProject = new Project('House Chores');
 projects.push(myDefaultProject);
 
-console.log(projects);
 
 Store.addProjectToStore(myDefaultProject);
 
-	newProject = document.createElement('li');
-	formProject = document.createElement('option');
+newProject = document.createElement('li');
+formProject = document.createElement('option');
 formProject.setAttribute('id', projects[0].title);
 projectList.appendChild(newProject);
 projectTitles.appendChild(formProject);
@@ -130,7 +128,6 @@ function addToDo() {
 		e.preventDefault();
 		let myToDo = Project.addToDoItem(toDoTitle.value, toDoDesc.value, priValue.value, toDoDate.value, proValue.value);
 		toDos.push(myToDo);
-		console.log(toDos);
 		Store.addToDoToStore(myToDo);
 		populateDom();
 	});
@@ -138,11 +135,8 @@ function addToDo() {
 
 function removeToDo() {
 	ongoingToDos.addEventListener('click', (e) => {
-		console.log(e.target.parentElement.title)
 		let b = e.target.parentElement.textContent;
-		console.log(b);
 		let a = e.target;
-		// console.log(e.target.parentElement)
 		if (a.className = 'fas fa-trash') {
 			Store.removeToDoFromStore(b);
 			e.target.parentElement.remove();
@@ -154,7 +148,6 @@ function newProjects() {
 	newProjectConfirm.addEventListener('click', () => {
 		let myNewProject = new Project(newProjectField.value);
 		projects.push(myNewProject);
-		console.log(projects);
 		Store.addProjectToStore(myNewProject);
 		populateDom();
 	})
@@ -164,6 +157,7 @@ function populateDom() {
 	while (ongoingToDos.firstChild) {
 		ongoingToDos.removeChild(ongoingToDos.firstChild);
 	}
+	
 	Array.from(Store.getToDoFromStore()).forEach((toDo) => {
 		const newToDo = document.createElement('li');
 		ongoingToDos.appendChild(newToDo);
@@ -182,6 +176,7 @@ function populateDom() {
 	Array.from(Store.getProjectFromStore()).forEach((project) => {
 		newProject = document.createElement('li');
 		formProject = document.createElement('option');
+		newProject.setAttribute('id', project.title)
 		formProject.setAttribute('id', project.title);
 		projectList.appendChild(newProject);
 		projectTitles.appendChild(formProject);
@@ -194,6 +189,39 @@ function populateDom() {
 		newProject.appendChild(trashIcon);
 	}
 	});
+}
+
+function populateDomByProject() {
+
+	Array.from(Store.getProjectFromStore()).forEach((project) => {
+		Array.from(Store.getToDoFromStore()).forEach((toDo) => {
+			const projectSelection = document.getElementById(project.title);
+			
+			
+			projectSelection.addEventListener('click', (e) => {
+				// console.log(e.target.textContent);
+				if (e.target.textContent === toDo.projectTitle ) {
+					console.log(toDo.projectTitle);
+					console.log(toDo);
+
+
+					while (ongoingToDos.firstChild) {
+						ongoingToDos.removeChild(ongoingToDos.firstChild);
+					}
+					const newToDo = document.createElement('li');
+					ongoingToDos.appendChild(newToDo);
+					newToDo.textContent = toDo.title;
+					const trashIcon = document.createElement('i');
+					trashIcon.setAttribute('class', 'fas fa-trash');
+					newToDo.appendChild(trashIcon);
+					
+						
+					
+					
+				}
+			})
+		});
+	});
 	
 }
 
@@ -203,19 +231,12 @@ function removeProject() {
 			Store.removeProjectFromStore(e.target.parentElement.textContent);
 			e.target.parentElement.remove();
 			projectTitles.childNodes.forEach((option) => {
-				console.log(option);
-				console.log(e.target.parentElement.textContent);
 				if (option.textContent === e.target.parentElement.textContent) {
 					option.remove();
 			}
 			});
 		}
 	});
-	// projectList.addEventListener('click', (e) => {
-	// 	if (e.target.className === 'fas fa-trash') { 
-	// 		e.target.parentElement.remove();
-	// 	}
-	// });
 }
 
-export { newProjects, addToDo, removeToDo, removeProject, populateDom }
+export { newProjects, addToDo, removeToDo, removeProject, populateDom, populateDomByProject }
