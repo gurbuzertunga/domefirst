@@ -150,7 +150,17 @@ function populateDom() {
 
     tblHead.appendChild(thRow);
     detailsTbl.appendChild(tblHead);
-    newToDo.appendChild(detailsTbl);
+    const tblBody = document.createElement('tbody');
+    const tblRow1 = document.createElement('tr');
+    const tBody = [toDo.title, toDo.description, toDo.dueDate, toDo.priority]
+    tBody.forEach((prop) => {
+      const tBodyData = document.createElement('td');
+      tBodyData.textContent = prop;
+      tblRow1.appendChild(tBodyData);
+    });
+    tblBody.appendChild(tblRow1);
+    detailsTbl.appendChild(tblBody);
+    document.body.appendChild(detailsTbl);
     detailsTbl.style.display = 'none';
   });
 
@@ -191,9 +201,15 @@ function showToDoDetails() {
     if (e.target.className === 'fas fa-angle-down fa-2x') {
         if (a.style.display === 'none') {
           a.style.display = 'block';
-        } else {
-          a.style.display = 'none';
+          e.target.className = 'fas fa-angle-up fa-2x';
         }
+    }
+
+    if (e.target.className === 'fas fa-angle-up fa-2x') {
+      if (a.style.display === 'block') {
+        a.style.display = 'none';
+        e.target.className = 'fas fa-angle-down fa-2x';
+      }
     }
   });
 }
