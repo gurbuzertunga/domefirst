@@ -17,6 +17,22 @@ let newProject;
 let formProject;
 let proValue = "";
 
+const detailsTbl = document.createElement('table');
+const tblHead = document.createElement('thead');
+const thRow = document.createElement('tr');
+const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
+detailsArr.forEach((heading) => {
+  const thData = document.createElement('th');
+  thData.textContent = heading;
+  thRow.appendChild(thData);
+});
+const tblBody = document.createElement('tbody');
+document.body.appendChild(detailsTbl);
+tblHead.appendChild(thRow);
+detailsTbl.appendChild(tblHead);
+detailsTbl.appendChild(tblBody);
+detailsTbl.style.display = 'none';
+
 class Store {
   static getToDoFromStore() {
     if (localStorage.getItem("localToDos") === null) {
@@ -171,41 +187,43 @@ function populateDom() {
 }
 
 function showToDoDetails() {
-  const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
-  const detailsTbl = document.createElement('table');
-  const tblHead = document.createElement('thead');
-  const thRow = document.createElement('tr');
-  detailsArr.forEach((heading) => {
-    const thData = document.createElement('th');
-    thData.textContent = heading;
-    thRow.appendChild(thData);
-  });  
-  tblHead.appendChild(thRow);
-  detailsTbl.appendChild(tblHead);
-  const tblBody = document.createElement('tbody');
   ongoingToDos.addEventListener('click', (e) => {
-    toDos.forEach((toDo) => {
-      if (e.target.className === 'fas fa-angle-down fa-2x' && e.target.parentElement.textContent === toDo.title) {
-        const tblRow1 = document.createElement('tr');
-        const tBody = [toDo.title, toDo.description, toDo.dueDate, toDo.priority]
-        tBody.forEach((prop) => {
-          const tBodyData = document.createElement('td');
-          tBodyData.textContent = prop;
-          tblRow1.appendChild(tBodyData);
+
+    const tblRow1 = document.createElement('tr');
+
+    if (e.target.className === 'fas fa-angle-down fa-2x') {
+      toDos.forEach((toDo) => {
+        if (e.target.parentElement.textContent === toDo.title) {
+          const tBody = [toDo.title, toDo.description, toDo.dueDate, toDo.priority]
+          tBody.forEach((prop) => {
+            const tBodyData = document.createElement('td');
+            tBodyData.textContent = prop;
+            tblRow1.appendChild(tBodyData);
+            tblBody.appendChild(tblRow1);
+          });
+        }
         });
-        tblBody.appendChild(tblRow1);
-        detailsTbl.appendChild(tblBody);
-        detailsTbl.style.display = 'block';
-        e.target.className = 'fas fa-angle-up fa-2x'; 
-      } else if (e.target.className === 'fas fa-angle-up fa-2x') {
-        thRow.remove();
-        detailsTbl.style.display = 'none';
-        e.target.className = 'fas fa-angle-down fa-2x';
-      }
-    });
-    document.body.appendChild(detailsTbl);
-  });
+    
+     
+    detailsTbl.style.display = 'block';
+    e.target.className = 'fas fa-angle-up fa-2x';
+  } else if (e.target.className === 'fas fa-angle-up fa-2x') {
+
+
+    detailsTbl.style.display = 'none';
+
+    while (tblBody.firstChild) {
+      tblBody.removeChild(tblBody.lastChild);
+    }
+
+    e.target.className = 'fas fa-angle-down fa-2x';
+  }
+});
 }
+
+
+
+
 
 
 
@@ -247,23 +265,23 @@ function newProjects() {
 }
 
 function populateDomByProject() {
-   
-      projectList.addEventListener("click", (e) => {
-        while (ongoingToDos.firstChild) {
-          ongoingToDos.removeChild(ongoingToDos.firstChild);
-        }
-        toDos.forEach((toDo) => {
-        if (e.target.textContent === toDo.projectTitle) {
-        
-          const newToDo = document.createElement("li");
-          ongoingToDos.appendChild(newToDo);
-          newToDo.textContent = toDo.title;
-          const trashIcon = document.createElement("i");
-          trashIcon.setAttribute("class", "fas fa-trash");
-          newToDo.appendChild(trashIcon);
-        }
-      });
+
+  projectList.addEventListener("click", (e) => {
+    while (ongoingToDos.firstChild) {
+      ongoingToDos.removeChild(ongoingToDos.firstChild);
+    }
+    toDos.forEach((toDo) => {
+      if (e.target.textContent === toDo.projectTitle) {
+
+        const newToDo = document.createElement("li");
+        ongoingToDos.appendChild(newToDo);
+        newToDo.textContent = toDo.title;
+        const trashIcon = document.createElement("i");
+        trashIcon.setAttribute("class", "fas fa-trash");
+        newToDo.appendChild(trashIcon);
+      }
     });
+  });
 }
 
 function removeProject() {
