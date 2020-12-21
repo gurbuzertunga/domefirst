@@ -103,7 +103,6 @@ while (projectList.firstChild) {
 
 const ongoingToDos = document.getElementById("ongoing-todos");
 let priValue = toDoPri.options[toDoPri.selectedIndex];
-console.log(priValue);
 
 const selectChangePri = () => {
   toDoPri.addEventListener("change", () => {
@@ -115,7 +114,6 @@ const selectChangePri = () => {
 const selectChangePro = () => {
   projectTitles.addEventListener("change", () => {
     proValue = projectTitles.options[projectTitles.selectedIndex];
-    console.log(proValue.value);
     return proValue.value;
   });
 };
@@ -134,6 +132,7 @@ function populateDom() {
     caret.setAttribute('class', 'fas fa-angle-down fa-2x');
     newToDo.textContent = toDo.title;
     newToDo.setAttribute('id', toDo.title);
+    newToDo.setAttribute('class', 'flex justify-between')
     newToDo.appendChild(caret);
     ongoingToDos.appendChild(newToDo);   
     const trashIcon = document.createElement("i");
@@ -154,32 +153,30 @@ function populateDom() {
     formProject.setAttribute("value", project.title);
     newProject.textContent = project.title;
     formProject.textContent = project.title;
-    projectList.appendChild(newProject);
-    projectTitles.appendChild(formProject);
-    proValue = projectTitles.options[projectTitles.selectedIndex];
-    projectTitleId = project.title;
     if (project.title !== "House Chores") {
       const trashIcon = document.createElement("i");
       trashIcon.setAttribute("class", "fas fa-trash");
       newProject.appendChild(trashIcon);
     }
+    projectList.appendChild(newProject);
+    projectTitles.appendChild(formProject);
+    proValue = projectTitles.options[projectTitles.selectedIndex];
+    projectTitleId = project.title;
   });
   populateDomByProject();
 	return proValue;
 }
 
 function showToDoDetails() {
-  toDos.forEach((toDo) => {
-    projectList.addEventListener('click', (e) => {
-      if (e.target.className === 'fa-angle-down') {
-         console.log(e.target);
+  
+    ongoingToDos.addEventListener('click', (e) => {
+      if (e.target.className === 'fas fa-angle-down fa-2x') {
+         
       }
      
     });
-  });
 }
 
-showToDoDetails();
 
 
 function addToDo() {
@@ -202,7 +199,7 @@ function removeToDo() {
   ongoingToDos.addEventListener("click", (e) => {
     let b = e.target.parentElement.textContent;
     let a = e.target;
-    if ((a.className = "fas fa-trash")) {
+    if ((a.className === "fas fa-trash")) {
       Store.removeToDoFromStore(b);
       e.target.parentElement.remove();
     }
@@ -230,11 +227,7 @@ function populateDomByProject() {
             ongoingToDos.removeChild(ongoingToDos.firstChild);
           }
         }
-        // console.log(e.target.textContent);
         if (e.target.textContent === toDo.projectTitle) {
-          console.log(e.target);
-          // console.log(toDo.projectTitle);
-          // console.log(toDo);
 
           while (ongoingToDos.firstChild) {
             ongoingToDos.removeChild(ongoingToDos.firstChild);
