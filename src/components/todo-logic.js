@@ -163,17 +163,31 @@ function populateDom() {
     proValue = projectTitles.options[projectTitles.selectedIndex];
     projectTitleId = project.title;
   });
+
+  const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
+    const detailsTbl = document.createElement('table');
+    const tblHead = document.createElement('thead');
+    const thRow = document.createElement('tr');
+    detailsArr.forEach((heading) => {
+      const thData = document.createElement('th');
+      thData.textContent = heading;
+      thRow.appendChild(thData);
+    })
+    
+    tblHead.appendChild(thRow);
+    detailsTbl.appendChild(tblHead);
+    newProject.appendChild(detailsTbl);
+    detailsTbl.style.display = 'none';
+
   populateDomByProject();
 	return proValue;
 }
 
 function showToDoDetails() {
-  
+    
     ongoingToDos.addEventListener('click', (e) => {
-      if (e.target.className === 'fas fa-angle-down fa-2x') {
-         
-      }
-     
+      console.log(document.querySelector('table'));
+           
     });
 }
 
@@ -187,7 +201,7 @@ function addToDo() {
       toDoDesc.value,
       priValue.value,
       toDoDate.value,
-      proValue.value
+      proValue.value,
     );
     toDos.push(myToDo);
     Store.addToDoToStore(myToDo);
