@@ -138,32 +138,6 @@ function populateDom() {
     const trashIcon = document.createElement("i");
     trashIcon.setAttribute("class", "fas fa-trash");
     newToDo.appendChild(trashIcon);
-
-
-    const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
-    const detailsTbl = document.createElement('table');
-    const tblHead = document.createElement('thead');
-    const thRow = document.createElement('tr');
-    detailsArr.forEach((heading) => {
-      const thData = document.createElement('th');
-      thData.textContent = heading;
-      thRow.appendChild(thData);
-    })
-
-    tblHead.appendChild(thRow);
-    detailsTbl.appendChild(tblHead);
-    const tblBody = document.createElement('tbody');
-    const tblRow1 = document.createElement('tr');
-    const tBody = [toDo.title, toDo.description, toDo.dueDate, toDo.priority]
-    tBody.forEach((prop) => {
-      const tBodyData = document.createElement('td');
-      tBodyData.textContent = prop;
-      tblRow1.appendChild(tBodyData);
-    });
-    tblBody.appendChild(tblRow1);
-    detailsTbl.appendChild(tblBody);
-    document.body.appendChild(detailsTbl);
-    detailsTbl.style.display = 'none';
   });
 
   while (projectTitles.firstChild) {
@@ -197,20 +171,39 @@ function populateDom() {
 }
 
 function showToDoDetails() {
-  
+  const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
+  const detailsTbl = document.createElement('table');
+  const tblHead = document.createElement('thead');
+  const thRow = document.createElement('tr');
+  detailsArr.forEach((heading) => {
+    const thData = document.createElement('th');
+    thData.textContent = heading;
+    thRow.appendChild(thData);
+  });  
+  tblHead.appendChild(thRow);
+  detailsTbl.appendChild(tblHead);
+  const tblBody = document.createElement('tbody');
   ongoingToDos.addEventListener('click', (e) => {
-    const a = document.querySelector('table');
-    if (e.target.className === 'fas fa-angle-down fa-2x') {
-       
-          a.style.display = 'block';
-          e.target.className = 'fas fa-angle-up fa-2x';
-      
-    } else if (e.target.className === 'fas fa-angle-up fa-2x') {
-      
-        a.style.display = 'none';
+    toDos.forEach((toDo) => {
+      if (e.target.className === 'fas fa-angle-down fa-2x' && e.target.parentElement.textContent === toDo.title) {
+        const tblRow1 = document.createElement('tr');
+        const tBody = [toDo.title, toDo.description, toDo.dueDate, toDo.priority]
+        tBody.forEach((prop) => {
+          const tBodyData = document.createElement('td');
+          tBodyData.textContent = prop;
+          tblRow1.appendChild(tBodyData);
+        });
+        tblBody.appendChild(tblRow1);
+        detailsTbl.appendChild(tblBody);
+        detailsTbl.style.display = 'block';
+        e.target.className = 'fas fa-angle-up fa-2x'; 
+      } else if (e.target.className === 'fas fa-angle-up fa-2x') {
+        thRow.remove();
+        detailsTbl.style.display = 'none';
         e.target.className = 'fas fa-angle-down fa-2x';
-     
-    }
+      }
+    });
+    document.body.appendChild(detailsTbl);
   });
 }
 
