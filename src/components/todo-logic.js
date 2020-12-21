@@ -130,8 +130,11 @@ function populateDom() {
 
   Array.from(Store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement("li");
+    const caret = document.createElement('i');
+    caret.setAttribute('class', 'fas fa-angle-down fa-2x');
     newToDo.textContent = toDo.title;
     newToDo.setAttribute('id', toDo.title);
+    newToDo.appendChild(caret);
     ongoingToDos.appendChild(newToDo);   
     const trashIcon = document.createElement("i");
     trashIcon.setAttribute("class", "fas fa-trash");
@@ -164,6 +167,20 @@ function populateDom() {
   populateDomByProject();
 	return proValue;
 }
+
+function showToDoDetails() {
+  toDos.forEach((toDo) => {
+    projectList.addEventListener('click', (e) => {
+      if (e.target.className === 'fa-angle-down') {
+         console.log(e.target);
+      }
+     
+    });
+  });
+}
+
+showToDoDetails();
+
 
 function addToDo() {
   toDoSubmit.addEventListener("click", (e) => {
@@ -261,4 +278,5 @@ export {
   removeProject,
   populateDom,
   populateDomByProject,
+  showToDoDetails,
 };
