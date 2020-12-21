@@ -93,8 +93,8 @@ if (localStorage.getItem("localProjects") === null) {
   formProject.textContent = projects[0].title;
   projectList.appendChild(newProject);
   projectTitles.appendChild(formProject);
-	projectTitleId = projects[0].title;
-	projectTitles.options[projectTitles.selectedIndex].defaultSelected = true;
+  projectTitleId = projects[0].title;
+  projectTitles.options[projectTitles.selectedIndex].defaultSelected = true;
 }
 
 while (projectList.firstChild) {
@@ -134,10 +134,24 @@ function populateDom() {
     newToDo.setAttribute('id', toDo.title);
     newToDo.setAttribute('class', 'flex justify-between')
     newToDo.appendChild(caret);
-    ongoingToDos.appendChild(newToDo);   
+    ongoingToDos.appendChild(newToDo);
     const trashIcon = document.createElement("i");
     trashIcon.setAttribute("class", "fas fa-trash");
     newToDo.appendChild(trashIcon);
+    const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
+    const detailsTbl = document.createElement('table');
+    const tblHead = document.createElement('thead');
+    const thRow = document.createElement('tr');
+    detailsArr.forEach((heading) => {
+      const thData = document.createElement('th');
+      thData.textContent = heading;
+      thRow.appendChild(thData);
+    })
+
+    tblHead.appendChild(thRow);
+    detailsTbl.appendChild(tblHead);
+    newToDo.appendChild(detailsTbl);
+    detailsTbl.style.display = 'none';
   });
 
   while (projectTitles.firstChild) {
@@ -164,31 +178,24 @@ function populateDom() {
     projectTitleId = project.title;
   });
 
-  const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
-    const detailsTbl = document.createElement('table');
-    const tblHead = document.createElement('thead');
-    const thRow = document.createElement('tr');
-    detailsArr.forEach((heading) => {
-      const thData = document.createElement('th');
-      thData.textContent = heading;
-      thRow.appendChild(thData);
-    })
-    
-    tblHead.appendChild(thRow);
-    detailsTbl.appendChild(tblHead);
-    newProject.appendChild(detailsTbl);
-    detailsTbl.style.display = 'none';
+
 
   populateDomByProject();
-	return proValue;
+  return proValue;
 }
 
 function showToDoDetails() {
-    
-    ongoingToDos.addEventListener('click', (e) => {
-      console.log(document.querySelector('table'));
-           
-    });
+  
+  ongoingToDos.addEventListener('click', (e) => {
+    const a = document.querySelector('table');
+    if (e.target.className === 'fas fa-angle-down fa-2x') {
+        if (a.style.display === 'none') {
+          a.style.display = 'block';
+        } else {
+          a.style.display = 'none';
+        }
+    }
+  });
 }
 
 
@@ -234,7 +241,7 @@ function populateDomByProject() {
   projects.forEach((project) => {
     toDos.forEach((toDo) => {
       const projectSelection = document.getElementById(project.title);
-      
+
       projectList.addEventListener("click", (e) => {
         if (project.title !== toDo.projectTitle) {
           while (ongoingToDos.firstChild) {
