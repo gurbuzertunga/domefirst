@@ -97,7 +97,6 @@ if (localStorage.getItem("localProjects") === null) {
 	projectTitles.options[projectTitles.selectedIndex].defaultSelected = true;
 }
 
-
 while (projectList.firstChild) {
   projectList.removeChild(projectList.firstChild);
 }
@@ -116,6 +115,7 @@ const selectChangePri = () => {
 const selectChangePro = () => {
   projectTitles.addEventListener("change", () => {
     proValue = projectTitles.options[projectTitles.selectedIndex];
+    console.log(proValue.value);
     return proValue.value;
   });
 };
@@ -159,7 +159,8 @@ function populateDom() {
       trashIcon.setAttribute("class", "fas fa-trash");
       newProject.appendChild(trashIcon);
     }
-	});
+  });
+  populateDomByProject();
 	return proValue;
 }
 
@@ -171,7 +172,7 @@ function addToDo() {
       toDoDesc.value,
       priValue.value,
       toDoDate.value,
-      populateDom().value
+      proValue.value
     );
     toDos.push(myToDo);
     Store.addToDoToStore(myToDo);
@@ -196,19 +197,21 @@ function newProjects() {
     projects.push(myNewProject);
     Store.addProjectToStore(myNewProject);
     populateDom();
+    populateDomByProject();
   });
 }
 
 function populateDomByProject() {
-  Array.from(Store.getProjectFromStore()).forEach((project) => {
-    Array.from(Store.getToDoFromStore()).forEach((toDo) => {
+  projects.forEach((project) => {
+    toDos.forEach((toDo) => {
       const projectSelection = document.getElementById(project.title);
-
-      projectSelection.addEventListener("click", (e) => {
+      
+      projectList.addEventListener("click", (e) => {
         // console.log(e.target.textContent);
         if (e.target.textContent === toDo.projectTitle) {
-          console.log(toDo.projectTitle);
-          console.log(toDo);
+          console.log(e.target);
+          // console.log(toDo.projectTitle);
+          // console.log(toDo);
 
           while (ongoingToDos.firstChild) {
             ongoingToDos.removeChild(ongoingToDos.firstChild);
