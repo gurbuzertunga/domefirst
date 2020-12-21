@@ -138,6 +138,8 @@ function populateDom() {
     const trashIcon = document.createElement("i");
     trashIcon.setAttribute("class", "fas fa-trash");
     newToDo.appendChild(trashIcon);
+
+
     const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
     const detailsTbl = document.createElement('table');
     const tblHead = document.createElement('thead');
@@ -199,17 +201,15 @@ function showToDoDetails() {
   ongoingToDos.addEventListener('click', (e) => {
     const a = document.querySelector('table');
     if (e.target.className === 'fas fa-angle-down fa-2x') {
-        if (a.style.display === 'none') {
+       
           a.style.display = 'block';
           e.target.className = 'fas fa-angle-up fa-2x';
-        }
-    }
-
-    if (e.target.className === 'fas fa-angle-up fa-2x') {
-      if (a.style.display === 'block') {
+      
+    } else if (e.target.className === 'fas fa-angle-up fa-2x') {
+      
         a.style.display = 'none';
         e.target.className = 'fas fa-angle-down fa-2x';
-      }
+     
     }
   });
 }
@@ -254,21 +254,14 @@ function newProjects() {
 }
 
 function populateDomByProject() {
-  projects.forEach((project) => {
-    toDos.forEach((toDo) => {
-      const projectSelection = document.getElementById(project.title);
-
+   
       projectList.addEventListener("click", (e) => {
-        if (project.title !== toDo.projectTitle) {
-          while (ongoingToDos.firstChild) {
-            ongoingToDos.removeChild(ongoingToDos.firstChild);
-          }
+        while (ongoingToDos.firstChild) {
+          ongoingToDos.removeChild(ongoingToDos.firstChild);
         }
+        toDos.forEach((toDo) => {
         if (e.target.textContent === toDo.projectTitle) {
-
-          while (ongoingToDos.firstChild) {
-            ongoingToDos.removeChild(ongoingToDos.firstChild);
-          }
+        
           const newToDo = document.createElement("li");
           ongoingToDos.appendChild(newToDo);
           newToDo.textContent = toDo.title;
@@ -278,7 +271,6 @@ function populateDomByProject() {
         }
       });
     });
-  });
 }
 
 function removeProject() {
