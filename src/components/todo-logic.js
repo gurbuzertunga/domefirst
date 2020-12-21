@@ -130,8 +130,9 @@ function populateDom() {
 
   Array.from(Store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement("li");
-    ongoingToDos.appendChild(newToDo);
     newToDo.textContent = toDo.title;
+    newToDo.setAttribute('id', toDo.title);
+    ongoingToDos.appendChild(newToDo);   
     const trashIcon = document.createElement("i");
     trashIcon.setAttribute("class", "fas fa-trash");
     newToDo.appendChild(trashIcon);
@@ -207,6 +208,11 @@ function populateDomByProject() {
       const projectSelection = document.getElementById(project.title);
       
       projectList.addEventListener("click", (e) => {
+        if (project.title !== toDo.projectTitle) {
+          while (ongoingToDos.firstChild) {
+            ongoingToDos.removeChild(ongoingToDos.firstChild);
+          }
+        }
         // console.log(e.target.textContent);
         if (e.target.textContent === toDo.projectTitle) {
           console.log(e.target);
@@ -232,6 +238,12 @@ function removeProject() {
   projectList.addEventListener("click", (e) => {
     if (e.target.className === "fas fa-trash") {
       Store.removeProjectFromStore(e.target.parentElement.textContent);
+      Store.getToDoFromStore().forEach((toDo) => {
+        if (e.target.parentElement.textContent === toDo.projectTitle) {
+          Store.removeToDoFromStore(toDo.title);
+          document.getElementById(toDo.title).remove();
+        }
+      });
       e.target.parentElement.remove();
       projectTitles.childNodes.forEach((option) => {
         if (option.textContent === e.target.parentElement.textContent) {
