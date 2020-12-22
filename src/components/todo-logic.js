@@ -144,16 +144,19 @@ function populateDom() {
 
   Array.from(Store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement("li");
+    const icons = document.createElement('span');
+    icons.setAttribute('class', 'flex justify-between items-center w-12');
     const caret = document.createElement("i");
-    caret.setAttribute("class", "fas fa-angle-down fa-2x");
+    caret.setAttribute("class", "fas fa-angle-down fa-2x cursor-pointer");
+    const trashIcon = document.createElement("i");
+    trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
     newToDo.textContent = toDo.title;
     newToDo.setAttribute("id", toDo.title);
-    newToDo.setAttribute("class", "flex justify-between");
-    newToDo.appendChild(caret);
+    newToDo.setAttribute("class", "flex justify-between bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none");
+    icons.appendChild(caret);
+    icons.appendChild(trashIcon);
+    newToDo.appendChild(icons);
     ongoingToDos.appendChild(newToDo);
-    const trashIcon = document.createElement("i");
-    trashIcon.setAttribute("class", "fas fa-trash");
-    newToDo.appendChild(trashIcon);
   });
 
   while (projectTitles.firstChild) {
@@ -166,14 +169,15 @@ function populateDom() {
     newProject = document.createElement("li");
     formProject = document.createElement("option");
     newProject.setAttribute("id", project.title);
+    newProject.setAttribute("class", "flex justify-between bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
     formProject.setAttribute("value", project.title);
     newProject.textContent = project.title;
-    formProject.textContent = project.title;
     if (project.title !== "House Chores") {
       const trashIcon = document.createElement("i");
-      trashIcon.setAttribute("class", "fas fa-trash");
+      trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
       newProject.appendChild(trashIcon);
     }
+    formProject.textContent = project.title;
     projectList.appendChild(newProject);
     projectTitles.appendChild(formProject);
     proValue = projectTitles.options[projectTitles.selectedIndex];
@@ -186,9 +190,10 @@ function populateDom() {
 
 function showToDoDetails() {
   ongoingToDos.addEventListener("click", (e) => {
+    console.log(e.target);
     const tblRow1 = document.createElement("tr");
 
-    if (e.target.className === "fas fa-angle-down fa-2x") {
+    if (e.target.className === "fas fa-angle-down fa-1x cursor-pointer") {
       toDos.forEach((toDo) => {
         if (e.target.parentElement.textContent === toDo.title) {
           const tBody = [
@@ -208,14 +213,14 @@ function showToDoDetails() {
 
       detailsTbl.style.display = "block";
       e.target.className = "fas fa-angle-up fa-2x";
-    } else if (e.target.className === "fas fa-angle-up fa-2x") {
+    } else if (e.target.className === "fas fa-angle-up fa-2x cursor-pointer") {
       detailsTbl.style.display = "none";
 
       while (tblBody.firstChild) {
         tblBody.removeChild(tblBody.lastChild);
       }
 
-      e.target.className = "fas fa-angle-down fa-2x";
+      e.target.className = "fas fa-angle-down fa-2x cursor-pointer";
     }
   });
 }
@@ -249,7 +254,7 @@ function removeToDo() {
   ongoingToDos.addEventListener("click", (e) => {
     let b = e.target.parentElement.textContent;
     let a = e.target;
-    if (a.className === "fas fa-trash") {
+    if (a.className === "fas fa-trash cursor-pointer") {
       Store.removeToDoFromStore(b);
       e.target.parentElement.remove();
     }
@@ -274,10 +279,11 @@ function populateDomByProject() {
     toDos.forEach((toDo) => {
       if (e.target.textContent === toDo.projectTitle) {
         const newToDo = document.createElement("li");
+        newToDo.setAttribute("class", "flex justify-between items-center bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none");
         ongoingToDos.appendChild(newToDo);
         newToDo.textContent = toDo.title;
         const trashIcon = document.createElement("i");
-        trashIcon.setAttribute("class", "fas fa-trash");
+        trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
         newToDo.appendChild(trashIcon);
       }
     });
@@ -286,7 +292,7 @@ function populateDomByProject() {
 
 function removeProject() {
   projectList.addEventListener("click", (e) => {
-    if (e.target.className === "fas fa-trash") {
+    if (e.target.className === "fas fa-trash cursor-pointer") {
       Store.removeProjectFromStore(e.target.parentElement.textContent);
       Store.getToDoFromStore().forEach((toDo) => {
         if (e.target.parentElement.textContent === toDo.projectTitle) {
