@@ -1,93 +1,56 @@
-let toDos = [];
-let projects = [];
+import * as el from './dom-elements';
 
-const newProjectField = document.getElementById("addProject");
-const newProjectConfirm = document.getElementById("addProjectConfirm");
-const projectList = document.getElementById("project-list");
-const projectTitles = document.getElementById("project-titles");
-const toDoTitle = document.getElementById("title");
-const toDoDesc = document.getElementById("description");
-const toDoPri = document.getElementById("priority");
-const toDoDate = document.getElementById("date");
-const toDoSubmit = document.getElementById("submit-todo");
-
-let myToDos = [];
-let myProjects = [];
-let newProject;
-let formProject;
-let proValue = "";
-
-const detailsTbl = document.createElement("table");
-detailsTbl.setAttribute('class','w-4/5 table-auto mx-auto my-5');
-const tblHead = document.createElement("thead");
-tblHead.setAttribute('class','justify-between text-white');
-const thRow = document.createElement("tr");
-thRow.setAttribute('class','bg-gray-800');
-const detailsArr = ["Title", "Description", "DueDate", "Priority"];
-detailsArr.forEach((heading) => {
-  const thData = document.createElement("th");
-  thData.setAttribute('class','px-16 py-2');
-  thData.textContent = heading;
-  thRow.appendChild(thData);
-});
-const tblBody = document.createElement("tbody");
-tblBody.setAttribute('class','bg-gray-200');
-document.querySelector('.container').insertAdjacentElement('afterend',detailsTbl);
-tblHead.appendChild(thRow);
-detailsTbl.appendChild(tblHead);
-detailsTbl.appendChild(tblBody);
-detailsTbl.style.display = "none";
 
 class Store {
   static getToDoFromStore() {
     if (localStorage.getItem("localToDos") === null) {
-      toDos = [];
+      el.toDos = [];
     } else {
-      toDos = JSON.parse(localStorage.getItem("localToDos"));
+      el.toDos = JSON.parse(localStorage.getItem("localToDos"));
     }
-    return toDos;
+    return el.toDos;
   }
 
   static getProjectFromStore() {
     if (localStorage.getItem("localProjects") === null) {
-      projects = [];
+      el.projects = [];
     } else {
-      projects = JSON.parse(localStorage.getItem("localProjects"));
+      el.projects = JSON.parse(localStorage.getItem("localProjects"));
     }
-    return projects;
+    return el.projects;
   }
 
   static addToDoToStore(toDo) {
-    toDos = Store.getToDoFromStore();
-    toDos.push(toDo);
+    el.toDos = Store.getToDoFromStore();
+    el.toDos.push(toDo);
 
-    localStorage.setItem("localToDos", JSON.stringify(toDos));
+    localStorage.setItem("localToDos", JSON.stringify(el.toDos));
   }
 
   static addProjectToStore(project) {
-    projects = Store.getProjectFromStore();
-    projects.push(project);
-    localStorage.setItem("localProjects", JSON.stringify(projects));
+    el.projects = Store.getProjectFromStore();
+    el.projects.push(project);
+    localStorage.setItem("localProjects", JSON.stringify(el.projects));
   }
 
   static removeToDoFromStore(title) {
-    toDos = Store.getToDoFromStore();
-    toDos.forEach((toDo) => {
+    el.toDos = Store.getToDoFromStore();
+    el.toDos.forEach((toDo) => {
       if (toDo.title === title) {
-        toDos.splice(toDos.indexOf(toDo), 1);
+        el.toDos.splice(el.toDos.indexOf(toDo), 1);
       }
     });
-    localStorage.setItem("localToDos", JSON.stringify(toDos));
+    localStorage.setItem("localToDos", JSON.stringify(el.toDos));
   }
 
   static removeProjectFromStore(title) {
-    projects = Store.getProjectFromStore();
-    projects.forEach((project, index) => {
+    el.projects = Store.getProjectFromStore();
+    el.projects.forEach((project, index) => {
       if (project.title === title) {
-        projects.splice(index, 1);
+        el.projects.splice(index, 1);
       }
     });
-    localStorage.setItem("localProjects", JSON.stringify(projects));
+    localStorage.setItem("localProjects", JSON.stringify(el.projects));
   }
 }
 
@@ -99,43 +62,41 @@ class Project {
     return { title, description, priority, dueDate, projectTitle };
   }
 }
-let projectTitleId = "";
+
 
 if (localStorage.getItem("localProjects") === null) {
   const myDefaultProject = new Project("House Chores");
-  projects.push(myDefaultProject);
+  el.projects.push(myDefaultProject);
 
   Store.addProjectToStore(myDefaultProject);
 
-  newProject = document.createElement("li");
-  formProject = document.createElement("option");
-  formProject.setAttribute("value", projects[0].title);
-  newProject.textContent = projects[0].title;
-  formProject.textContent = projects[0].title;
-  projectList.appendChild(newProject);
-  projectTitles.appendChild(formProject);
-  projectTitleId = projects[0].title;
-  projectTitles.options[projectTitles.selectedIndex].defaultSelected = true;
+  el.newProject = document.createElement("li");
+  el.formProject = document.createElement("option");
+  el.formProject.setAttribute("value", el.projects[0].title);
+  el.newProject.textContent = el.projects[0].title;
+  el.formProject.textContent = el.projects[0].title;
+  el.projectList.appendChild(el.newProject);
+  el.projectTitles.appendChild(el.formProject);
+  el.projectTitleId = el.projects[0].title;
+  el.projectTitles.options[el.projectTitles.selectedIndex].defaultSelected = true;
 }
 
-while (projectList.firstChild) {
-  projectList.removeChild(projectList.firstChild);
+while (el.projectList.firstChild) {
+  el.projectList.removeChild(el.projectList.firstChild);
 }
 
-const ongoingToDos = document.getElementById("ongoing-todos");
-let priValue = toDoPri.options[toDoPri.selectedIndex];
 
 const selectChangePri = () => {
-  toDoPri.addEventListener("change", () => {
-    priValue = toDoPri.options[toDoPri.selectedIndex];
-    return priValue.value;
+  el.toDoPri.addEventListener("change", () => {
+    el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
+    return el.priValue.value;
   });
 };
 
 const selectChangePro = () => {
-  projectTitles.addEventListener("change", () => {
-    proValue = projectTitles.options[projectTitles.selectedIndex];
-    return proValue.value;
+  el.projectTitles.addEventListener("change", () => {
+    el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
+    return el.proValue.value;
   });
 };
 
@@ -143,8 +104,8 @@ selectChangePri();
 selectChangePro();
 
 function populateDom() {
-  while (ongoingToDos.firstChild) {
-    ongoingToDos.removeChild(ongoingToDos.firstChild);
+  while (el.ongoingToDos.firstChild) {
+    el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
   }
 
   Array.from(Store.getToDoFromStore()).forEach((toDo) => {
@@ -161,45 +122,44 @@ function populateDom() {
     icons.appendChild(caret);
     icons.appendChild(trashIcon);
     newToDo.appendChild(icons);
-    ongoingToDos.appendChild(newToDo);
+    el.ongoingToDos.appendChild(newToDo);
   });
 
-  while (projectTitles.firstChild) {
-    projectTitles.removeChild(projectTitles.firstChild);
+  while (el.projectTitles.firstChild) {
+    el.projectTitles.removeChild(el.projectTitles.firstChild);
   }
-  while (projectList.firstChild) {
-    projectList.removeChild(projectList.firstChild);
+  while (el.projectList.firstChild) {
+    el.projectList.removeChild(el.projectList.firstChild);
   }
   Array.from(Store.getProjectFromStore()).forEach((project) => {
-    newProject = document.createElement("li");
-    formProject = document.createElement("option");
-    newProject.setAttribute("id", project.title);
-    newProject.setAttribute("class", "flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
-    formProject.setAttribute("value", project.title);
-    newProject.textContent = project.title;
+    el.newProject = document.createElement("li");
+    el.formProject = document.createElement("option");
+    el.newProject.setAttribute("id", project.title);
+    el.newProject.setAttribute("class", "flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
+    el.formProject.setAttribute("value", project.title);
+    el.newProject.textContent = project.title;
     if (project.title !== "House Chores") {
       const trashIcon = document.createElement("i");
       trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
-      newProject.appendChild(trashIcon);
+      el.newProject.appendChild(trashIcon);
     }
-    formProject.textContent = project.title;
-    projectList.appendChild(newProject);
-    projectTitles.appendChild(formProject);
-    proValue = projectTitles.options[projectTitles.selectedIndex];
-    projectTitleId = project.title;
+    el.formProject.textContent = project.title;
+    el.projectList.appendChild(el.newProject);
+    el.projectTitles.appendChild(el.formProject);
+    el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
+    el.projectTitleId = project.title;
   });
 
   populateDomByProject();
-  return proValue;
+  return el.proValue;
 }
 
 function showToDoDetails() {
-  ongoingToDos.addEventListener("click", (e) => {
-    console.log(e.target);
+  el.ongoingToDos.addEventListener("click", (e) => {
     const tblRow1 = document.createElement("tr");
     tblRow1.setAttribute('class','bg-white border-4 border-gray-200');
     if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
-      toDos.forEach((toDo) => {
+      el.toDos.forEach((toDo) => {
         if (e.target.parentElement.parentElement.textContent === toDo.title) {
           const tBody = [
             toDo.title,
@@ -212,19 +172,18 @@ function showToDoDetails() {
             tBodyData.setAttribute('class','px-16 py-2 items-center border border-gray-500');
             tBodyData.textContent = prop;
             tblRow1.appendChild(tBodyData);
-            tblBody.appendChild(tblRow1);
-            console.log(tblRow1);
+            el.tblBody.appendChild(tblRow1);
           });
         }
       });
 
-      detailsTbl.style.display = "table";
+      el.detailsTbl.style.display = "table";
       e.target.className = "fas fa-angle-up fa-2x cursor-pointer";
     } else if (e.target.className === "fas fa-angle-up fa-2x cursor-pointer") {
-      detailsTbl.style.display = "none";
+      el.detailsTbl.style.display = "none";
 
-      while (tblBody.firstChild) {
-        tblBody.removeChild(tblBody.lastChild);
+      while (el.tblBody.firstChild) {
+        el.tblBody.removeChild(el.tblBody.lastChild);
       }
 
       e.target.className = "fas fa-angle-down fa-2x cursor-pointer";
@@ -233,22 +192,22 @@ function showToDoDetails() {
 }
 
 function addToDo() {
-  toDoSubmit.addEventListener("click", (e) => {
+  el.toDoSubmit.addEventListener("click", (e) => {
     e.preventDefault();
-    toDos.forEach((toDo) => {
-      if (toDo.title === toDoTitle.value) {
+    el.toDos.forEach((toDo) => {
+      if (toDo.title === el.toDoTitle.value) {
         console.log("Title is used already");
       } 
         
     });
     let myToDo = Project.addToDoItem(
-      toDoTitle.value,
-      toDoDesc.value,
-      priValue.value,
-      toDoDate.value,
-      proValue.value
+      el.toDoTitle.value,
+      el.toDoDesc.value,
+      el.priValue.value,
+      el.toDoDate.value,
+      el.proValue.value
     );
-    toDos.push(myToDo);
+    el.toDos.push(myToDo);
     Store.addToDoToStore(myToDo);
     populateDom();
   //     }
@@ -258,20 +217,20 @@ function addToDo() {
 
 
 function removeToDo() {
-  ongoingToDos.addEventListener("click", (e) => {
-    let b = e.target.parentElement.textContent;
+  el.ongoingToDos.addEventListener("click", (e) => {
+    let b = e.target.parentElement.parentElement.textContent;
     let a = e.target;
     if (a.className === "fas fa-trash cursor-pointer") {
       Store.removeToDoFromStore(b);
-      e.target.parentElement.remove();
+      e.target.parentElement.parentElement.remove();
     }
   });
 }
 
 function newProjects() {
-  newProjectConfirm.addEventListener("click", () => {
-    let myNewProject = new Project(newProjectField.value);
-    projects.push(myNewProject);
+  el.newProjectConfirm.addEventListener("click", () => {
+    let myNewProject = new Project(el.newProjectField.value);
+    el.projects.push(myNewProject);
     Store.addProjectToStore(myNewProject);
     populateDom();
     populateDomByProject();
@@ -279,15 +238,15 @@ function newProjects() {
 }
 
 function populateDomByProject() {
-  projectList.addEventListener("click", (e) => {
-    while (ongoingToDos.firstChild) {
-      ongoingToDos.removeChild(ongoingToDos.firstChild);
+  el.projectList.addEventListener("click", (e) => {
+    while (el.ongoingToDos.firstChild) {
+      el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
     }
-    toDos.forEach((toDo) => {
+    el.toDos.forEach((toDo) => {
       if (e.target.textContent === toDo.projectTitle) {
         const newToDo = document.createElement("li");
         newToDo.setAttribute("class", "flex justify-between items-center bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none");
-        ongoingToDos.appendChild(newToDo);
+        el.ongoingToDos.appendChild(newToDo);
         newToDo.textContent = toDo.title;
         const trashIcon = document.createElement("i");
         trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
@@ -298,7 +257,7 @@ function populateDomByProject() {
 }
 
 function removeProject() {
-  projectList.addEventListener("click", (e) => {
+  el.projectList.addEventListener("click", (e) => {
     if (e.target.className === "fas fa-trash cursor-pointer") {
       Store.removeProjectFromStore(e.target.parentElement.textContent);
       Store.getToDoFromStore().forEach((toDo) => {
@@ -308,7 +267,7 @@ function removeProject() {
         }
       });
       e.target.parentElement.remove();
-      projectTitles.childNodes.forEach((option) => {
+      el.projectTitles.childNodes.forEach((option) => {
         if (option.textContent === e.target.parentElement.textContent) {
           option.remove();
         }
