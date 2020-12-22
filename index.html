@@ -8,10 +8,15 @@
     <title>Do Me First - TO DO APP</title>
   </head>
   <body>
+    <nav class="bg-black flex justify-center">
+      <div>
+        <img src="../src/logo.png" alt="Company Logo">
+      </div>
+      
+    </nav>
     <section class="main-content">
       <div class="app">
-        <h1>DoMeFirst</h1>
-        <div class="container flex justify-between">
+        <div class="container flex justify-between mx-auto">
           <div class="left grid grid-cols-1">
             
             <div class="ongoing">
@@ -20,9 +25,9 @@
               </ul>
             </div>
           </div>
-          <div class="right">
+          <div class="right bg-gray-300 border border-black h-screen rounded-md">
             <div class="projects">
-              <h2>Project</h2>
+              <h2 class="text-center text-lg text-red-500 mb-5">Project</h2>
               <div class="project">
                 <ul id="project-list">
                 </ul>
@@ -34,7 +39,7 @@
           </div>
 
         </div>
-        <div class="form-container w-60 mx-auto">
+        <div class="form-container mx-auto w-52">
           <form id="form" class="flex flex-col">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" class="border rounded p-2" placeholder="Enter title">
