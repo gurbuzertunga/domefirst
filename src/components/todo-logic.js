@@ -18,16 +18,21 @@ let formProject;
 let proValue = "";
 
 const detailsTbl = document.createElement("table");
+detailsTbl.setAttribute('class','w-full table-auto mx-auto my-5');
 const tblHead = document.createElement("thead");
+tblHead.setAttribute('class','justify-between');
 const thRow = document.createElement("tr");
+thRow.setAttribute('class','bg-gray-800');
 const detailsArr = ["Title", "Description", "DueDate", "Priority"];
 detailsArr.forEach((heading) => {
   const thData = document.createElement("th");
+  thData.setAttribute('class','px-16 py-2');
   thData.textContent = heading;
   thRow.appendChild(thData);
 });
 const tblBody = document.createElement("tbody");
-document.body.appendChild(detailsTbl);
+tblBody.setAttribute('class','bg-gray-200');
+document.querySelector('.container').insertAdjacentElement('afterend',detailsTbl);
 tblHead.appendChild(thRow);
 detailsTbl.appendChild(tblHead);
 detailsTbl.appendChild(tblBody);
@@ -192,10 +197,12 @@ function showToDoDetails() {
   ongoingToDos.addEventListener("click", (e) => {
     console.log(e.target);
     const tblRow1 = document.createElement("tr");
-
-    if (e.target.className === "fas fa-angle-down fa-1x cursor-pointer") {
+    tblRow1.setAttribute('class','bg-white border-4 border-gray-200');
+    if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
       toDos.forEach((toDo) => {
-        if (e.target.parentElement.textContent === toDo.title) {
+        console.log(toDo);
+        if (e.target.parentElement.parentElement.textContent === toDo.title) {
+          console.log(e.target.parentElement.parentElement.textContent);
           const tBody = [
             toDo.title,
             toDo.description,
@@ -204,15 +211,17 @@ function showToDoDetails() {
           ];
           tBody.forEach((prop) => {
             const tBodyData = document.createElement("td");
+            tBodyData.setAttribute('class','px-16 py-2 items-center border border-gray-500');
             tBodyData.textContent = prop;
             tblRow1.appendChild(tBodyData);
             tblBody.appendChild(tblRow1);
+            console.log(tblRow1);
           });
         }
       });
 
       detailsTbl.style.display = "block";
-      e.target.className = "fas fa-angle-up fa-2x";
+      e.target.className = "fas fa-angle-up fa-2x cursor-pointer";
     } else if (e.target.className === "fas fa-angle-up fa-2x cursor-pointer") {
       detailsTbl.style.display = "none";
 
