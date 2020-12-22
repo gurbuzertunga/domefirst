@@ -7,7 +7,7 @@
     <script src="https://kit.fontawesome.com/9a2f12287f.js" crossorigin="anonymous"></script>
     <title>Do Me First - TO DO APP</title>
   </head>
-  <body>
+  <body class='bg-gray-200'>
     <nav class="bg-black flex justify-center">
       <div>
         <img src="../src/logo.png" alt="Company Logo">
@@ -16,49 +16,53 @@
     </nav>
     <section class="main-content">
       <div class="app">
-        <div class="container flex justify-between mx-auto">
-          <div class="left grid grid-cols-1">
+        <div class="container mx-auto grid grid-cols-2 gap-6 grid-rows-1">
+          <div class="left grid grid-cols-1 bg-gray-500 rounded p-2 transform -skew-x-6">
             
             <div class="ongoing">
-              <h2>ONGOING TO-DOS</h2>
+              <h2 class="text-yellow-800 transform skew-x-3 text-center text-2xl font-bold">ONGOING TO-DOS</h2>
               <ul id="ongoing-todos">
               </ul>
             </div>
           </div>
-          <div class="right bg-gray-300 border border-black h-screen rounded-md">
+          <div class="right bg-gray-300 border border-black p-2 rounded-md transform skew-x-3">
             <div class="projects">
-              <h2 class="text-center text-lg text-red-500 mb-5">Project</h2>
+              <h2 class="text-center text-2xl font-bold text-red-500 mb-5 -skew-x-3 text-lg">PROJECTS</h2>
               <div class="project">
                 <ul id="project-list">
                 </ul>
               </div>
-              <input type="text" id="addProject" placeholder="Add your project...">
-              <i class="fas fa-plus-circle" id="addProjectConfirm"></i>
+              <p class="text-center">
+                <input type="text" id="addProject" placeholder="Add your project..." class="w-4/5">
+                <i class="fas fa-plus-circle fa-2x cursor-pointer" id="addProjectConfirm"></i>
+              </p>
+              
             </div>
             
           </div>
 
         </div>
-        <div class="form-container mx-auto w-52">
+        <div class="form-container mx-auto w-1/2">
+          <h2 class='text-center text-2xl font-bold text-red-500 my-3 text-lg'>Create a ToDo Item</h2>
           <form id="form" class="flex flex-col">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" class="border rounded p-2" placeholder="Enter title">
+            <input type="text" id="title" name="title" class="border border-red-700 rounded p-2" placeholder="Enter title">
             <label for="description">Description:</label>
-            <input type="text" id="description" name="description" class="border rounded p-2" placeholder="Enter description">
+            <input type="text" id="description" name="description" class="border border-red-700 rounded p-2" placeholder="Enter description">
             <label for="priority">Priority: </label>
-            <select name="priority" id="priority">
+            <select name="priority" id="priority" class="border border-red-700 rounded p-2">
               <option value="low">Low</option>
               <option value="normal">Normal</option>
               <option value="high">High</option>
               <option value="extreme">Extreme</option>
             </select>
             <label for="project-titles">Project :</label>
-           <select name="projects-titles" id="project-titles">
+           <select name="projects-titles" id="project-titles" class="border border-red-700 rounded p-2">
            </select>
             <label for="date">date:</label>
-            <input type="date" id="date" name="date" class="border rounded p-2">
+            <input type="date" id="date" name="date" class="border border-red-700 rounded p-2">
             
-            <button type="submit" id="submit-todo" class="bg-white rounded p-2 w-24 mx-auto my-5">Submit</button>
+            <button type="submit" id="submit-todo" class="cursor-pointer bg-gray-900 text-white text-xl rounded p-2 w-full mx-auto my-5">CREATE TODO</button>
           </form>
         </div>
       </div>
