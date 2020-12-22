@@ -18,9 +18,9 @@ let formProject;
 let proValue = "";
 
 const detailsTbl = document.createElement("table");
-detailsTbl.setAttribute('class','w-full table-auto mx-auto my-5');
+detailsTbl.setAttribute('class','w-4/5 table-auto mx-auto my-5');
 const tblHead = document.createElement("thead");
-tblHead.setAttribute('class','justify-between');
+tblHead.setAttribute('class','justify-between text-white');
 const thRow = document.createElement("tr");
 thRow.setAttribute('class','bg-gray-800');
 const detailsArr = ["Title", "Description", "DueDate", "Priority"];
@@ -174,7 +174,7 @@ function populateDom() {
     newProject = document.createElement("li");
     formProject = document.createElement("option");
     newProject.setAttribute("id", project.title);
-    newProject.setAttribute("class", "flex justify-between bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
+    newProject.setAttribute("class", "flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
     formProject.setAttribute("value", project.title);
     newProject.textContent = project.title;
     if (project.title !== "House Chores") {
@@ -200,9 +200,7 @@ function showToDoDetails() {
     tblRow1.setAttribute('class','bg-white border-4 border-gray-200');
     if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
       toDos.forEach((toDo) => {
-        console.log(toDo);
         if (e.target.parentElement.parentElement.textContent === toDo.title) {
-          console.log(e.target.parentElement.parentElement.textContent);
           const tBody = [
             toDo.title,
             toDo.description,
@@ -220,7 +218,7 @@ function showToDoDetails() {
         }
       });
 
-      detailsTbl.style.display = "block";
+      detailsTbl.style.display = "table";
       e.target.className = "fas fa-angle-up fa-2x cursor-pointer";
     } else if (e.target.className === "fas fa-angle-up fa-2x cursor-pointer") {
       detailsTbl.style.display = "none";
