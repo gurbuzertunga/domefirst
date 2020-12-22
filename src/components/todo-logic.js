@@ -17,21 +17,21 @@ let newProject;
 let formProject;
 let proValue = "";
 
-const detailsTbl = document.createElement('table');
-const tblHead = document.createElement('thead');
-const thRow = document.createElement('tr');
-const detailsArr = ['Title', 'Description', 'DueDate', 'Priority'];
+const detailsTbl = document.createElement("table");
+const tblHead = document.createElement("thead");
+const thRow = document.createElement("tr");
+const detailsArr = ["Title", "Description", "DueDate", "Priority"];
 detailsArr.forEach((heading) => {
-  const thData = document.createElement('th');
+  const thData = document.createElement("th");
   thData.textContent = heading;
   thRow.appendChild(thData);
 });
-const tblBody = document.createElement('tbody');
+const tblBody = document.createElement("tbody");
 document.body.appendChild(detailsTbl);
 tblHead.appendChild(thRow);
 detailsTbl.appendChild(tblHead);
 detailsTbl.appendChild(tblBody);
-detailsTbl.style.display = 'none';
+detailsTbl.style.display = "none";
 
 class Store {
   static getToDoFromStore() {
@@ -144,11 +144,11 @@ function populateDom() {
 
   Array.from(Store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement("li");
-    const caret = document.createElement('i');
-    caret.setAttribute('class', 'fas fa-angle-down fa-2x');
+    const caret = document.createElement("i");
+    caret.setAttribute("class", "fas fa-angle-down fa-2x");
     newToDo.textContent = toDo.title;
-    newToDo.setAttribute('id', toDo.title);
-    newToDo.setAttribute('class', 'flex justify-between')
+    newToDo.setAttribute("id", toDo.title);
+    newToDo.setAttribute("class", "flex justify-between");
     newToDo.appendChild(caret);
     ongoingToDos.appendChild(newToDo);
     const trashIcon = document.createElement("i");
@@ -180,74 +180,76 @@ function populateDom() {
     projectTitleId = project.title;
   });
 
-
-
   populateDomByProject();
   return proValue;
 }
 
 function showToDoDetails() {
-  ongoingToDos.addEventListener('click', (e) => {
+  ongoingToDos.addEventListener("click", (e) => {
+    const tblRow1 = document.createElement("tr");
 
-    const tblRow1 = document.createElement('tr');
-
-    if (e.target.className === 'fas fa-angle-down fa-2x') {
+    if (e.target.className === "fas fa-angle-down fa-2x") {
       toDos.forEach((toDo) => {
         if (e.target.parentElement.textContent === toDo.title) {
-          const tBody = [toDo.title, toDo.description, toDo.dueDate, toDo.priority]
+          const tBody = [
+            toDo.title,
+            toDo.description,
+            toDo.dueDate,
+            toDo.priority,
+          ];
           tBody.forEach((prop) => {
-            const tBodyData = document.createElement('td');
+            const tBodyData = document.createElement("td");
             tBodyData.textContent = prop;
             tblRow1.appendChild(tBodyData);
             tblBody.appendChild(tblRow1);
           });
         }
-        });
-    
-     
-    detailsTbl.style.display = 'block';
-    e.target.className = 'fas fa-angle-up fa-2x';
-  } else if (e.target.className === 'fas fa-angle-up fa-2x') {
+      });
 
+      detailsTbl.style.display = "block";
+      e.target.className = "fas fa-angle-up fa-2x";
+    } else if (e.target.className === "fas fa-angle-up fa-2x") {
+      detailsTbl.style.display = "none";
 
-    detailsTbl.style.display = 'none';
+      while (tblBody.firstChild) {
+        tblBody.removeChild(tblBody.lastChild);
+      }
 
-    while (tblBody.firstChild) {
-      tblBody.removeChild(tblBody.lastChild);
+      e.target.className = "fas fa-angle-down fa-2x";
     }
-
-    e.target.className = 'fas fa-angle-down fa-2x';
-  }
-});
+  });
 }
-
-
-
-
-
-
 
 function addToDo() {
   toDoSubmit.addEventListener("click", (e) => {
     e.preventDefault();
+    toDos.forEach((toDo) => {
+      if (toDo.title === toDoTitle.value) {
+        console.log("Title is used already");
+      } 
+        
+    });
     let myToDo = Project.addToDoItem(
       toDoTitle.value,
       toDoDesc.value,
       priValue.value,
       toDoDate.value,
-      proValue.value,
+      proValue.value
     );
     toDos.push(myToDo);
     Store.addToDoToStore(myToDo);
     populateDom();
-  });
-}
+  //     }
+     
+    });
+  }
+
 
 function removeToDo() {
   ongoingToDos.addEventListener("click", (e) => {
     let b = e.target.parentElement.textContent;
     let a = e.target;
-    if ((a.className === "fas fa-trash")) {
+    if (a.className === "fas fa-trash") {
       Store.removeToDoFromStore(b);
       e.target.parentElement.remove();
     }
@@ -265,14 +267,12 @@ function newProjects() {
 }
 
 function populateDomByProject() {
-
   projectList.addEventListener("click", (e) => {
     while (ongoingToDos.firstChild) {
       ongoingToDos.removeChild(ongoingToDos.firstChild);
     }
     toDos.forEach((toDo) => {
       if (e.target.textContent === toDo.projectTitle) {
-
         const newToDo = document.createElement("li");
         ongoingToDos.appendChild(newToDo);
         newToDo.textContent = toDo.title;
