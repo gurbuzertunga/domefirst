@@ -3,53 +3,53 @@ import * as el from './dom-elements';
 const store = (() => {
   const getToDoFromStore = () => {
     if (localStorage.getItem('localToDos') === null) {
-      el.toDos = [];
+      el.myToDos = [];
     } else {
-      el.toDos = JSON.parse(localStorage.getItem('localToDos'));
+      el.myToDos = JSON.parse(localStorage.getItem('localToDos'));
     }
-    return el.toDos;
+    return el.myToDos;
   };
 
   const getProjectFromStore = () => {
     if (localStorage.getItem('localProjects') === null) {
-      el.projects = [];
+      el.myProjects = [];
     } else {
-      el.projects = JSON.parse(localStorage.getItem('localProjects'));
+      el.myProjects = JSON.parse(localStorage.getItem('localProjects'));
     }
-    return el.projects;
+    return el.myProjects;
   };
 
   const addToDoToStore = (toDo) => {
-    el.toDos = store.getToDoFromStore();
-    el.toDos.push(toDo);
+    el.myToDos = store.getToDoFromStore();
+    el.myToDos.push(toDo);
 
-    localStorage.setItem('localToDos', JSON.stringify(el.toDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.myToDos));
   };
 
   const addProjectToStore = (project) => {
-    el.projects = store.getProjectFromStore();
-    el.projects.push(project);
-    localStorage.setItem('localProjects', JSON.stringify(el.projects));
+    el.myProjects = store.getProjectFromStore();
+    el.myProjects.push(project);
+    localStorage.setItem('localProjects', JSON.stringify(el.myProjects));
   };
 
   const removeToDoFromStore = (title) => {
-    el.toDos = store.getToDoFromStore();
-    el.toDos.forEach((toDo) => {
+    el.myToDos = store.getToDoFromStore();
+    el.myToDos.forEach((toDo) => {
       if (toDo.toDoTitle === title) {
-        el.toDos.splice(el.toDos.indexOf(toDo), 1);
+        el.myToDos.splice(el.myToDos.indexOf(toDo), 1);
       }
     });
-    localStorage.setItem('localToDos', JSON.stringify(el.toDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.myToDos));
   };
 
   const removeProjectFromStore = (title) => {
-    el.projects = store.getProjectFromStore();
-    el.projects.forEach((project, index) => {
+    el.myProjects = store.getProjectFromStore();
+    el.myProjects.forEach((project, index) => {
       if (project.title === title) {
-        el.projects.splice(index, 1);
+        el.myProjects.splice(index, 1);
       }
     });
-    localStorage.setItem('localProjects', JSON.stringify(el.projects));
+    localStorage.setItem('localProjects', JSON.stringify(el.myProjects));
   };
 
   return {

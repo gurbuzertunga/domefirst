@@ -12,6 +12,8 @@ const form = document.getElementById('form');
 const formContainer = document.querySelector('div.form-container');
 let toDos = [];
 let projects = [];
+let myToDos = [];
+let myProjects = [];
 let priValue = toDoPri.options[toDoPri.selectedIndex];
 let newProject;
 let formProject;
@@ -65,4 +67,6 @@ export {
   tblBody,
   form,
   formContainer,
+  myToDos,
+  myProjects,
 };

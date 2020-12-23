@@ -41,7 +41,7 @@ function removeProject() {
       store.getToDoFromStore().forEach((toDo) => {
         if (e.target.parentElement.textContent === toDo.projectTitle) {
           store.removeToDoFromStore(toDo.toDoTitle);
-          document.getElementById(toDo.toDoTitle).remove();
+          el.projectList.removeChild(document.getElementById(toDo.toDoTitle));
         }
       });
       e.target.parentElement.remove();
@@ -58,5 +58,5 @@ export {
   newProjects,
   removeProject,
   Project,
-  createDefaultProject
+  createDefaultProject,
 };
