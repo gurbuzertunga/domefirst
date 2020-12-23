@@ -1,10 +1,7 @@
-import * as el from './dom-elements';
-import { Project } from './project-logic';
-import { populateDom } from './populate-dom';
-import store from './local-storage';
-
-
-
+import * as el from "./dom-elements";
+import { Project } from "./project-logic";
+import { populateDom } from "./populate-dom";
+import store from "./local-storage";
 
 const selectChangePri = () => {
   el.toDoPri.addEventListener("change", () => {
@@ -39,7 +36,9 @@ function showToDoDetails() {
     tblRow1.setAttribute("class", "bg-white border-4 border-gray-200");
     if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
       el.toDos.forEach((toDo) => {
-        if (e.target.parentElement.parentElement.textContent === toDo.toDoTitle) {
+        if (
+          e.target.parentElement.parentElement.textContent === toDo.toDoTitle
+        ) {
           const tBody = [
             toDo.toDoTitle,
             toDo.description,
@@ -76,16 +75,27 @@ function showToDoDetails() {
 function addToDo() {
   el.toDoSubmit.addEventListener("click", (e) => {
     e.preventDefault();
-      let myToDo = new ToDo (
+    if (el.toDos.some(toDo => toDo.toDoTitle === el.toDoTitle.value)) {
+      const alert = document.createElement('div');
+      alert.innerHTML = `${el.toDoTitle.value} is already used, type again`;
+      alert.setAttribute('id', 'alert');
+      el.formContainer.prepend(alert);
+      setTimeout(() => {
+        document.getElementById('alert').remove();
+      }, 2000);
+
+    } else {
+      let myToDo = new ToDo(
         el.proValue.value,
         el.toDoTitle.value,
         el.toDoDesc.value,
-        el.priValue.value,
-        el.toDoDate.value,
+        el.toDoPri.value,
+        el.toDoDate.value
       );
       el.toDos.push(myToDo);
       store.addToDoToStore(myToDo);
       populateDom();
+    }      
   });
 }
 

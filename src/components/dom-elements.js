@@ -14,6 +14,8 @@ const toDoSubmit = document.getElementById("submit-todo");
 const ongoingToDos = document.getElementById("ongoing-todos");
 let priValue = toDoPri.options[toDoPri.selectedIndex];
 const testDiv = document.querySelector('div.project');
+const form = document.getElementById('form');
+const formContainer = document.querySelector('div.form-container');
 
 let myToDos = [];
 let myProjects = [];
@@ -73,7 +75,9 @@ export {
     thRow,
     detailsArr,
     tblBody,
-    testDiv
+    testDiv,
+    form,
+    formContainer
 }
 
 
