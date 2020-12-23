@@ -1,8 +1,9 @@
 import * as el from './dom-elements';
+import { Project } from './project-logic';
 
 
-class Store {
-  static getToDoFromStore() {
+const store = (() => {
+  function getToDoFromStore() {
     if (localStorage.getItem("localToDos") === null) {
       el.toDos = [];
     } else {
@@ -11,7 +12,7 @@ class Store {
     return el.toDos;
   }
 
-  static getProjectFromStore() {
+  function getProjectFromStore() {
     if (localStorage.getItem("localProjects") === null) {
       el.projects = [];
     } else {
@@ -20,20 +21,20 @@ class Store {
     return el.projects;
   }
 
-  static addToDoToStore(toDo) {
+  function addToDoToStore(toDo) {
     el.toDos = Store.getToDoFromStore();
     el.toDos.push(toDo);
 
     localStorage.setItem("localToDos", JSON.stringify(el.toDos));
   }
 
-  static addProjectToStore(project) {
+  const addProjectToStore = (project) => {
     el.projects = Store.getProjectFromStore();
     el.projects.push(project);
     localStorage.setItem("localProjects", JSON.stringify(el.projects));
   }
 
-  static removeToDoFromStore(title) {
+  function removeToDoFromStore(title) {
     el.toDos = Store.getToDoFromStore();
     el.toDos.forEach((toDo) => {
       if (toDo.title === title) {
@@ -43,7 +44,7 @@ class Store {
     localStorage.setItem("localToDos", JSON.stringify(el.toDos));
   }
 
-  static removeProjectFromStore(title) {
+  function removeProjectFromStore(title) {
     el.projects = Store.getProjectFromStore();
     el.projects.forEach((project, index) => {
       if (project.title === title) {
@@ -52,23 +53,16 @@ class Store {
     });
     localStorage.setItem("localProjects", JSON.stringify(el.projects));
   }
-}
+  })();
 
-class Project {
-  constructor(title) {
-    this.title = title;
-  }
-  static addToDoItem(title, description, priority, dueDate, projectTitle) {
-    return { title, description, priority, dueDate, projectTitle };
-  }
-}
+
 
 
 if (localStorage.getItem("localProjects") === null) {
   const myDefaultProject = new Project("House Chores");
   el.projects.push(myDefaultProject);
 
-  Store.addProjectToStore(myDefaultProject);
+  store.addProjectToStore(myDefaultProject);
 
   el.newProject = document.createElement("li");
   el.formProject = document.createElement("option");
@@ -227,15 +221,7 @@ function removeToDo() {
   });
 }
 
-function newProjects() {
-  el.newProjectConfirm.addEventListener("click", () => {
-    let myNewProject = new Project(el.newProjectField.value);
-    el.projects.push(myNewProject);
-    Store.addProjectToStore(myNewProject);
-    populateDom();
-    populateDomByProject();
-  });
-}
+
 
 function populateDomByProject() {
   el.projectList.addEventListener("click", (e) => {
@@ -256,32 +242,13 @@ function populateDomByProject() {
   });
 }
 
-function removeProject() {
-  el.projectList.addEventListener("click", (e) => {
-    if (e.target.className === "fas fa-trash cursor-pointer") {
-      Store.removeProjectFromStore(e.target.parentElement.textContent);
-      Store.getToDoFromStore().forEach((toDo) => {
-        if (e.target.parentElement.textContent === toDo.projectTitle) {
-          Store.removeToDoFromStore(toDo.title);
-          document.getElementById(toDo.title).remove();
-        }
-      });
-      e.target.parentElement.remove();
-      el.projectTitles.childNodes.forEach((option) => {
-        if (option.textContent === e.target.parentElement.textContent) {
-          option.remove();
-        }
-      });
-    }
-  });
-}
+
 
 export {
-  newProjects,
   addToDo,
   removeToDo,
-  removeProject,
   populateDom,
   populateDomByProject,
   showToDoDetails,
+  Store
 };
