@@ -1,5 +1,6 @@
 import * as el from './dom-elements';
 import { Project } from './project-logic';
+import { populateDom }from './populate-dom';
 
 
 const store = (() => {
@@ -35,7 +36,7 @@ const store = (() => {
   }
 
   const removeToDoFromStore = (title) => {
-    el.toDos = Store.getToDoFromStore();
+    el.toDos = store.getToDoFromStore();
     el.toDos.forEach((toDo) => {
       if (toDo.title === title) {
         el.toDos.splice(el.toDos.indexOf(toDo), 1);
@@ -57,29 +58,28 @@ const store = (() => {
   return {removeProjectFromStore, removeToDoFromStore, addProjectToStore, addToDoToStore, getProjectFromStore, getToDoFromStore}
   })();
 
+  if (localStorage.getItem("localProjects") === null) {
+    const myDefaultProject = new Project("House Chores");
+    el.projects.push(myDefaultProject);
+    
+    
+    store.addProjectToStore(myDefaultProject);
+  
+    el.newProject = document.createElement("li");
+    el.formProject = document.createElement("option");
+    el.formProject.setAttribute("value", el.projects[0].title);
+    el.newProject.textContent = el.projects[0].title;
+    el.formProject.textContent = el.projects[0].title;
+    el.projectList.appendChild(el.newProject);
+    el.projectTitles.appendChild(el.formProject);
+    el.projectTitleId = el.projects[0].title;
+    el.projectTitles.options[el.projectTitles.selectedIndex].defaultSelected = true;
+  }
+  
+  while (el.projectList.firstChild) {
+    el.projectList.removeChild(el.projectList.firstChild);
+  }
 
-
-
-if (localStorage.getItem("localProjects") === null) {
-  const myDefaultProject = new Project("House Chores");
-  el.projects.push(myDefaultProject);
-
-  store.addProjectToStore(myDefaultProject);
-
-  el.newProject = document.createElement("li");
-  el.formProject = document.createElement("option");
-  el.formProject.setAttribute("value", el.projects[0].title);
-  el.newProject.textContent = el.projects[0].title;
-  el.formProject.textContent = el.projects[0].title;
-  el.projectList.appendChild(el.newProject);
-  el.projectTitles.appendChild(el.formProject);
-  el.projectTitleId = el.projects[0].title;
-  el.projectTitles.options[el.projectTitles.selectedIndex].defaultSelected = true;
-}
-
-while (el.projectList.firstChild) {
-  el.projectList.removeChild(el.projectList.firstChild);
-}
 
 
 const selectChangePri = () => {
@@ -99,56 +99,6 @@ const selectChangePro = () => {
 selectChangePri();
 selectChangePro();
 
-function populateDom() {
-  while (el.ongoingToDos.firstChild) {
-    el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
-  }
-
-  Array.from(store.getToDoFromStore()).forEach((toDo) => {
-    const newToDo = document.createElement("li");
-    const icons = document.createElement('span');
-    icons.setAttribute('class', 'flex justify-between items-center w-12');
-    const caret = document.createElement("i");
-    caret.setAttribute("class", "fas fa-angle-down fa-2x cursor-pointer");
-    const trashIcon = document.createElement("i");
-    trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
-    newToDo.textContent = toDo.title;
-    newToDo.setAttribute("id", toDo.title);
-    newToDo.setAttribute("class", "flex justify-between bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none");
-    icons.appendChild(caret);
-    icons.appendChild(trashIcon);
-    newToDo.appendChild(icons);
-    el.ongoingToDos.appendChild(newToDo);
-  });
-
-  while (el.projectTitles.firstChild) {
-    el.projectTitles.removeChild(el.projectTitles.firstChild);
-  }
-  while (el.projectList.firstChild) {
-    el.projectList.removeChild(el.projectList.firstChild);
-  }
-  Array.from(store.getProjectFromStore()).forEach((project) => {
-    el.newProject = document.createElement("li");
-    el.formProject = document.createElement("option");
-    el.newProject.setAttribute("id", project.title);
-    el.newProject.setAttribute("class", "flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
-    el.formProject.setAttribute("value", project.title);
-    el.newProject.textContent = project.title;
-    if (project.title !== "House Chores") {
-      const trashIcon = document.createElement("i");
-      trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
-      el.newProject.appendChild(trashIcon);
-    }
-    el.formProject.textContent = project.title;
-    el.projectList.appendChild(el.newProject);
-    el.projectTitles.appendChild(el.formProject);
-    el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
-    el.projectTitleId = project.title;
-  });
-
-  populateDomByProject();
-  return el.proValue;
-}
 
 function showToDoDetails() {
   el.ongoingToDos.addEventListener("click", (e) => {
@@ -206,7 +156,6 @@ function addToDo() {
     el.toDos.push(myToDo);
     store.addToDoToStore(myToDo);
     populateDom();
-  //     }
      
     });
   }
@@ -225,32 +174,11 @@ function removeToDo() {
 
 
 
-function populateDomByProject() {
-  el.projectList.addEventListener("click", (e) => {
-    while (el.ongoingToDos.firstChild) {
-      el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
-    }
-    el.toDos.forEach((toDo) => {
-      if (e.target.textContent === toDo.projectTitle) {
-        const newToDo = document.createElement("li");
-        newToDo.setAttribute("class", "flex justify-between items-center bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none");
-        el.ongoingToDos.appendChild(newToDo);
-        newToDo.textContent = toDo.title;
-        const trashIcon = document.createElement("i");
-        trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
-        newToDo.appendChild(trashIcon);
-      }
-    });
-  });
-}
-
 
 
 export {
   addToDo,
   removeToDo,
-  populateDom,
-  populateDomByProject,
   showToDoDetails,
 };
 export default store;

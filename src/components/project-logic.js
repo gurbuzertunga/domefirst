@@ -1,7 +1,7 @@
 import * as el from './dom-elements';
 import store from './todo-logic';
-import populateDom from './todo-logic';
-import populateDomByProject from './todo-logic';
+import {populateDom} from './populate-dom';
+import {populateDomByProject} from './populate-dom';
 
 class Project {
     constructor(title) {
@@ -11,6 +11,8 @@ class Project {
       return { title, description, priority, dueDate, projectTitle };
     }
 }
+
+
 
 function newProjects() {
     el.newProjectConfirm.addEventListener("click", () => {
@@ -41,5 +43,7 @@ function removeProject() {
       }
     });
 }
+
+  
 
 export { newProjects, removeProject, Project }
