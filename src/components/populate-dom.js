@@ -1,5 +1,5 @@
 import * as el from './dom-elements';
-import store from './todo-logic';
+import store from './local-storage';
 
 
 function populateDom() {

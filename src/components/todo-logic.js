@@ -1,86 +1,30 @@
 import * as el from './dom-elements';
 import { Project } from './project-logic';
-import { populateDom }from './populate-dom';
+import { populateDom } from './populate-dom';
+import store from './local-storage';
 
+if (localStorage.getItem("localProjects") === null) {
+  const myDefaultProject = new Project("House Chores");
+  el.projects.push(myDefaultProject);
 
-const store = (() => {
-  const getToDoFromStore = () => {
-    if (localStorage.getItem("localToDos") === null) {
-      el.toDos = [];
-    } else {
-      el.toDos = JSON.parse(localStorage.getItem("localToDos"));
-    }
-    return el.toDos;
-  }
+  store.addProjectToStore(myDefaultProject);
 
-  const getProjectFromStore = () => {
-    if (localStorage.getItem("localProjects") === null) {
-      el.projects = [];
-    } else {
-      el.projects = JSON.parse(localStorage.getItem("localProjects"));
-    }
-    return el.projects;
-  }
+  el.newProject = document.createElement("li");
+  el.formProject = document.createElement("option");
+  el.formProject.setAttribute("value", el.projects[0].title);
+  el.newProject.textContent = el.projects[0].title;
+  el.formProject.textContent = el.projects[0].title;
+  el.projectList.appendChild(el.newProject);
+  el.projectTitles.appendChild(el.formProject);
+  el.projectTitleId = el.projects[0].title;
+  el.projectTitles.options[
+    el.projectTitles.selectedIndex
+  ].defaultSelected = true;
+}
 
-  const addToDoToStore = (toDo) => {
-    el.toDos = store.getToDoFromStore();
-    el.toDos.push(toDo);
-
-    localStorage.setItem("localToDos", JSON.stringify(el.toDos));
-  }
-
-  const addProjectToStore = (project) => {
-    el.projects = store.getProjectFromStore();
-    el.projects.push(project);
-    localStorage.setItem("localProjects", JSON.stringify(el.projects));
-  }
-
-  const removeToDoFromStore = (title) => {
-    el.toDos = store.getToDoFromStore();
-    el.toDos.forEach((toDo) => {
-      if (toDo.title === title) {
-        el.toDos.splice(el.toDos.indexOf(toDo), 1);
-      }
-    });
-    localStorage.setItem("localToDos", JSON.stringify(el.toDos));
-  }
-
-  const removeProjectFromStore = (title) => {
-    el.projects = store.getProjectFromStore();
-    el.projects.forEach((project, index) => {
-      if (project.title === title) {
-        el.projects.splice(index, 1);
-      }
-    });
-    localStorage.setItem("localProjects", JSON.stringify(el.projects));
-  }
-
-  return {removeProjectFromStore, removeToDoFromStore, addProjectToStore, addToDoToStore, getProjectFromStore, getToDoFromStore}
-  })();
-
-  if (localStorage.getItem("localProjects") === null) {
-    const myDefaultProject = new Project("House Chores");
-    el.projects.push(myDefaultProject);
-    
-    
-    store.addProjectToStore(myDefaultProject);
-  
-    el.newProject = document.createElement("li");
-    el.formProject = document.createElement("option");
-    el.formProject.setAttribute("value", el.projects[0].title);
-    el.newProject.textContent = el.projects[0].title;
-    el.formProject.textContent = el.projects[0].title;
-    el.projectList.appendChild(el.newProject);
-    el.projectTitles.appendChild(el.formProject);
-    el.projectTitleId = el.projects[0].title;
-    el.projectTitles.options[el.projectTitles.selectedIndex].defaultSelected = true;
-  }
-  
-  while (el.projectList.firstChild) {
-    el.projectList.removeChild(el.projectList.firstChild);
-  }
-
-
+while (el.projectList.firstChild) {
+  el.projectList.removeChild(el.projectList.firstChild);
+}
 
 const selectChangePri = () => {
   el.toDoPri.addEventListener("change", () => {
@@ -99,11 +43,10 @@ const selectChangePro = () => {
 selectChangePri();
 selectChangePro();
 
-
 function showToDoDetails() {
   el.ongoingToDos.addEventListener("click", (e) => {
     const tblRow1 = document.createElement("tr");
-    tblRow1.setAttribute('class','bg-white border-4 border-gray-200');
+    tblRow1.setAttribute("class", "bg-white border-4 border-gray-200");
     if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
       el.toDos.forEach((toDo) => {
         if (e.target.parentElement.parentElement.textContent === toDo.title) {
@@ -115,7 +58,10 @@ function showToDoDetails() {
           ];
           tBody.forEach((prop) => {
             const tBodyData = document.createElement("td");
-            tBodyData.setAttribute('class','px-16 py-2 items-center border border-gray-500');
+            tBodyData.setAttribute(
+              "class",
+              "px-16 py-2 items-center border border-gray-500"
+            );
             tBodyData.textContent = prop;
             tblRow1.appendChild(tBodyData);
             el.tblBody.appendChild(tblRow1);
@@ -143,8 +89,7 @@ function addToDo() {
     el.toDos.forEach((toDo) => {
       if (toDo.title === el.toDoTitle.value) {
         console.log("Title is used already");
-      } 
-        
+      }
     });
     let myToDo = Project.addToDoItem(
       el.toDoTitle.value,
@@ -156,10 +101,8 @@ function addToDo() {
     el.toDos.push(myToDo);
     store.addToDoToStore(myToDo);
     populateDom();
-     
-    });
-  }
-
+  });
+}
 
 function removeToDo() {
   el.ongoingToDos.addEventListener("click", (e) => {
@@ -172,13 +115,4 @@ function removeToDo() {
   });
 }
 
-
-
-
-
-export {
-  addToDo,
-  removeToDo,
-  showToDoDetails,
-};
-export default store;
+export { addToDo, removeToDo, showToDoDetails };

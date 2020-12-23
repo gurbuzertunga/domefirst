@@ -1,5 +1,5 @@
 import * as el from './dom-elements';
-import store from './todo-logic';
+import store from './local-storage';
 import {populateDom} from './populate-dom';
 import {populateDomByProject} from './populate-dom';
 
