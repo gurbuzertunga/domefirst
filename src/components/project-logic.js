@@ -85,5 +85,5 @@ export {
   newProjects,
   removeProject,
   Project,
-  createDefaultProject
+  createDefaultProject,
 };
