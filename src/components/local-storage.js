@@ -2,19 +2,19 @@ import * as el from './dom-elements';
 
 const store = (() => {
   const getToDoFromStore = () => {
-    if (localStorage.getItem("localToDos") === null) {
+    if (localStorage.getItem('localToDos') === null) {
       el.toDos = [];
     } else {
-      el.toDos = JSON.parse(localStorage.getItem("localToDos"));
+      el.toDos = JSON.parse(localStorage.getItem('localToDos'));
     }
     return el.toDos;
   };
 
   const getProjectFromStore = () => {
-    if (localStorage.getItem("localProjects") === null) {
+    if (localStorage.getItem('localProjects') === null) {
       el.projects = [];
     } else {
-      el.projects = JSON.parse(localStorage.getItem("localProjects"));
+      el.projects = JSON.parse(localStorage.getItem('localProjects'));
     }
     return el.projects;
   };
@@ -23,13 +23,13 @@ const store = (() => {
     el.toDos = store.getToDoFromStore();
     el.toDos.push(toDo);
 
-    localStorage.setItem("localToDos", JSON.stringify(el.toDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.toDos));
   };
 
   const addProjectToStore = (project) => {
     el.projects = store.getProjectFromStore();
     el.projects.push(project);
-    localStorage.setItem("localProjects", JSON.stringify(el.projects));
+    localStorage.setItem('localProjects', JSON.stringify(el.projects));
   };
 
   const removeToDoFromStore = (title) => {
@@ -39,7 +39,7 @@ const store = (() => {
         el.toDos.splice(el.toDos.indexOf(toDo), 1);
       }
     });
-    localStorage.setItem("localToDos", JSON.stringify(el.toDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.toDos));
   };
 
   const removeProjectFromStore = (title) => {
@@ -49,7 +49,7 @@ const store = (() => {
         el.projects.splice(index, 1);
       }
     });
-    localStorage.setItem("localProjects", JSON.stringify(el.projects));
+    localStorage.setItem('localProjects', JSON.stringify(el.projects));
   };
 
   return {
