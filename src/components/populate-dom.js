@@ -14,7 +14,7 @@ function populateDomByProject() {
           'flex justify-between items-center bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none',
         );
         newToDo.textContent = toDo.toDoTitle;
-        el.ongoingToDos.appendChild(newToDo);        
+        el.ongoingToDos.appendChild(newToDo);
         const trashIcon = document.createElement('i');
         trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
         newToDo.appendChild(trashIcon);

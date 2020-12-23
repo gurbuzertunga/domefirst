@@ -33,7 +33,7 @@ function newProjects() {
       alert.setAttribute('id', 'alert');
       alert.setAttribute(
         'class',
-        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center'
+        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
       );
       alertContainer.prepend(alert);
       setTimeout(() => document.getElementById('alert').remove(), 2000);
@@ -47,7 +47,7 @@ function newProjects() {
       alert.setAttribute('id', 'alert');
       alert.setAttribute(
         'class',
-        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center'
+        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
       );
       alertContainer.prepend(alert);
       setTimeout(() => document.getElementById('alert').remove(), 2000);
@@ -81,4 +81,9 @@ function removeProject() {
   });
 }
 
-export { newProjects, removeProject, Project, createDefaultProject };
+export {
+  newProjects,
+  removeProject,
+  Project,
+  createDefaultProject
+};
