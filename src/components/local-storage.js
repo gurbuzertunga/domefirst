@@ -35,7 +35,7 @@ const store = (() => {
   const removeToDoFromStore = (title) => {
     el.toDos = store.getToDoFromStore();
     el.toDos.forEach((toDo) => {
-      if (toDo.title === title) {
+      if (toDo.toDoTitle === title) {
         el.toDos.splice(el.toDos.indexOf(toDo), 1);
       }
     });

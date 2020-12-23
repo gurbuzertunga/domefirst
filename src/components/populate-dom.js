@@ -37,7 +37,7 @@ function populateDom() {
       el.newProject.setAttribute("class", "flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none");
       el.formProject.setAttribute("value", project.title);
       el.newProject.textContent = project.title;
-      if (project.title !== "House Chores") {
+      if (project.title !== "House bitches") {
         const trashIcon = document.createElement("i");
         trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
         el.newProject.appendChild(trashIcon);

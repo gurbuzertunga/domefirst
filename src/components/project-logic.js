@@ -16,27 +16,24 @@ function createDefaultProject() {
       el.projects.push(myDefaultProject);
     
       store.addProjectToStore(myDefaultProject);
-       
-      const defaultProject = document.createElement('li');
-      
       const projectOpt = document.createElement("option");
       projectOpt.setAttribute("value", el.projects[0].title);
-      defaultProject.textContent = el.projects[0].title;
-      projectOpt.textContent = el.projects[0].title;
-      el.projectList.appendChild(defaultProject);
+      projectOpt.textContent = `${el.projects[0].title} (Default)`;
       el.projectTitles.appendChild(projectOpt);
-      el.projectTitleId = el.projects[0].title;
       el.projectTitles.options[
         el.projectTitles.selectedIndex
       ].defaultSelected = true;
+      const projectLi = document.createElement('li');
+      projectLi.textContent = el.projects[0].title;
+      el.projectList.appendChild(projectLi);
       console.log(el.projectList);
       
     }
     
     
-    while (el.projectList.firstChild) {
-      el.projectList.removeChild(el.projectList.firstChild);
-    }
+    // while (el.projectList.firstChild) {
+    //   el.projectList.removeChild(el.projectList.firstChild);
+    // }
   }
 
 function newProjects() {

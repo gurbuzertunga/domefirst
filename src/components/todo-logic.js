@@ -76,27 +76,23 @@ function showToDoDetails() {
 function addToDo() {
   el.toDoSubmit.addEventListener("click", (e) => {
     e.preventDefault();
-    el.toDos.forEach((toDo) => {
-      if (toDo.title === el.toDoTitle.value) {
-        console.log("Title is used already");
-      }
-    });
-    let myToDo = new ToDo (
-      el.proValue.value,
-      el.toDoTitle.value,
-      el.toDoDesc.value,
-      el.priValue.value,
-      el.toDoDate.value,
-    );
-    el.toDos.push(myToDo);
-    store.addToDoToStore(myToDo);
-    populateDom();
+      let myToDo = new ToDo (
+        el.proValue.value,
+        el.toDoTitle.value,
+        el.toDoDesc.value,
+        el.priValue.value,
+        el.toDoDate.value,
+      );
+      el.toDos.push(myToDo);
+      store.addToDoToStore(myToDo);
+      populateDom();
   });
 }
 
 function removeToDo() {
   el.ongoingToDos.addEventListener("click", (e) => {
     let b = e.target.parentElement.parentElement.textContent;
+    console.log(b);
     let a = e.target;
     if (a.className === "fas fa-trash cursor-pointer") {
       store.removeToDoFromStore(b);

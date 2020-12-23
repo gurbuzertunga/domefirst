@@ -13,6 +13,7 @@ const toDoDate = document.getElementById("date");
 const toDoSubmit = document.getElementById("submit-todo");
 const ongoingToDos = document.getElementById("ongoing-todos");
 let priValue = toDoPri.options[toDoPri.selectedIndex];
+const testDiv = document.querySelector('div.project');
 
 let myToDos = [];
 let myProjects = [];
@@ -71,7 +72,8 @@ export {
     tblHead,
     thRow,
     detailsArr,
-    tblBody
+    tblBody,
+    testDiv
 }
 
 
