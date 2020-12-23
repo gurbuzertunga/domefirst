@@ -9,6 +9,36 @@ class Project {
     }
 }
 
+function createDefaultProject() {
+  
+    if (localStorage.getItem("localProjects") === null) {
+      const myDefaultProject = new Project("House bitches");
+      el.projects.push(myDefaultProject);
+    
+      store.addProjectToStore(myDefaultProject);
+       
+      const defaultProject = document.createElement('li');
+      
+      const projectOpt = document.createElement("option");
+      projectOpt.setAttribute("value", el.projects[0].title);
+      defaultProject.textContent = el.projects[0].title;
+      projectOpt.textContent = el.projects[0].title;
+      el.projectList.appendChild(defaultProject);
+      el.projectTitles.appendChild(projectOpt);
+      el.projectTitleId = el.projects[0].title;
+      el.projectTitles.options[
+        el.projectTitles.selectedIndex
+      ].defaultSelected = true;
+      console.log(el.projectList);
+      
+    }
+    
+    
+    while (el.projectList.firstChild) {
+      el.projectList.removeChild(el.projectList.firstChild);
+    }
+  }
+
 function newProjects() {
     el.newProjectConfirm.addEventListener("click", () => {
       let myNewProject = new Project(el.newProjectField.value);
@@ -41,4 +71,4 @@ function removeProject() {
 
   
 
-export { newProjects, removeProject, Project }
+export { newProjects, removeProject, Project, createDefaultProject }
