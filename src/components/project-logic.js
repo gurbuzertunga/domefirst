@@ -25,12 +25,39 @@ function createDefaultProject() {
 }
 
 function newProjects() {
+  const alertContainer = document.querySelector('div.projects p');
   el.newProjectConfirm.addEventListener('click', () => {
-    const myNewProject = new Project(el.newProjectField.value);
-    el.projects.push(myNewProject);
-    store.addProjectToStore(myNewProject);
-    populateDom();
-    populateDomByProject();
+    if (el.newProjectField.value === '') {
+      const alert = document.createElement('div');
+      alert.innerHTML = 'Project Title cannot be blank';
+      alert.setAttribute('id', 'alert');
+      alert.setAttribute(
+        'class',
+        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center'
+      );
+      alertContainer.prepend(alert);
+      setTimeout(() => document.getElementById('alert').remove(), 2000);
+    } else if (
+      store
+        .getProjectFromStore()
+        .some((project) => project.title === el.newProjectField.value)
+    ) {
+      const alert = document.createElement('div');
+      alert.innerHTML = `${el.newProjectField.value} is already used, type another project`;
+      alert.setAttribute('id', 'alert');
+      alert.setAttribute(
+        'class',
+        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center'
+      );
+      alertContainer.prepend(alert);
+      setTimeout(() => document.getElementById('alert').remove(), 2000);
+    } else {
+      const myNewProject = new Project(el.newProjectField.value);
+      el.projects.push(myNewProject);
+      store.addProjectToStore(myNewProject);
+      populateDom();
+      populateDomByProject();
+    }
   });
 }
 
@@ -39,9 +66,9 @@ function removeProject() {
     if (e.target.className === 'fas fa-trash cursor-pointer') {
       store.removeProjectFromStore(e.target.parentElement.textContent);
       store.getToDoFromStore().forEach((toDo) => {
-        if (e.target.parentElement.textContent === toDo.projectTitle) {
+        if (e.target.parentElement.textContent === toDo.title) {
+          el.ongoingToDos.removeChild(document.getElementById(toDo.toDoTitle));
           store.removeToDoFromStore(toDo.toDoTitle);
-          el.projectList.removeChild(document.getElementById(toDo.toDoTitle));
         }
       });
       e.target.parentElement.remove();
@@ -54,9 +81,4 @@ function removeProject() {
   });
 }
 
-export {
-  newProjects,
-  removeProject,
-  Project,
-  createDefaultProject,
-};
+export { newProjects, removeProject, Project, createDefaultProject };

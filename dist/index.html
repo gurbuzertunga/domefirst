@@ -33,7 +33,7 @@
                 </ul>
               </div>
               <p class="text-center">
-                <input type="text" id="addProject" placeholder="Add your project..." class="w-4/5">
+                <input type="text" id="addProject" placeholder="Add your project..." class="w-4/5" required>
                 <i class="fas fa-plus-circle fa-2x cursor-pointer" id="addProjectConfirm"></i>
               </p>
               
@@ -46,9 +46,9 @@
           <h2 class='text-center text-2xl font-bold text-red-500 my-3 underline'>Create a ToDo Item</h2>
           <form id="form" class="flex flex-col">
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" class="border border-red-700 rounded p-2" placeholder="Enter title">
+            <input type="text" id="title" name="title" class="border border-red-700 rounded p-2" required placeholder="Enter title">
             <label for="description">Description:</label>
-            <input type="text" id="description" name="description" class="border border-red-700 rounded p-2" placeholder="Enter description">
+            <input type="text" id="description" name="description" required class="border border-red-700 rounded p-2" placeholder="Enter description">
             <label for="priority">Priority: </label>
             <select name="priority" id="priority" class="border border-red-700 rounded p-2">
               <option value="low">Low</option>

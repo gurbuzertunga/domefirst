@@ -35,7 +35,7 @@ function showToDoDetails() {
     const tblRow1 = document.createElement('tr');
     tblRow1.setAttribute('class', 'bg-white border-4 border-gray-200');
     if (e.target.className === 'fas fa-angle-down fa-2x cursor-pointer') {
-      el.toDos.forEach((toDo) => {
+      store.getToDoFromStore().forEach((toDo) => {
         if (
           e.target.parentElement.parentElement.textContent === toDo.toDoTitle
         ) {
@@ -75,9 +75,19 @@ function showToDoDetails() {
 function addToDo() {
   el.toDoSubmit.addEventListener('click', (e) => {
     e.preventDefault();
-    if (el.toDos.some((toDo) => toDo.toDoTitle === el.toDoTitle.value)) {
+    if (store.getToDoFromStore().some((toDo) => toDo.toDoTitle === el.toDoTitle.value)) {
       const alert = document.createElement('div');
-      alert.innerHTML = `${el.toDoTitle.value} is already used, type again`;
+      alert.innerHTML = `${el.toDoTitle.value} is already used, type another title`;
+      alert.setAttribute('id', 'alert');
+      alert.setAttribute(
+        'class',
+        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
+      );
+      el.form.insertAdjacentElement('beforeBegin', alert);
+      setTimeout(() => document.getElementById('alert').remove(), 2000);
+    } else if (el.toDoTitle.value === '' || el.toDoDesc.value === '') {
+      const alert = document.createElement('div');
+      alert.innerHTML = 'The form fields cannot be blank!';
       alert.setAttribute('id', 'alert');
       alert.setAttribute(
         'class',
