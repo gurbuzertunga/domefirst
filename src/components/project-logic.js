@@ -7,12 +7,7 @@ class Project {
     constructor(title) {
       this.title = title;
     }
-    static addToDoItem(title, description, priority, dueDate, projectTitle) {
-      return { title, description, priority, dueDate, projectTitle };
-    }
 }
-
-
 
 function newProjects() {
     el.newProjectConfirm.addEventListener("click", () => {

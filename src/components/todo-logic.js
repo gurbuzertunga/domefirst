@@ -43,15 +43,25 @@ const selectChangePro = () => {
 selectChangePri();
 selectChangePro();
 
+class ToDo extends Project {
+  constructor(title, toDoTitle, description, priority, dueDate) {
+    super(title);
+    this.toDoTitle = toDoTitle;
+    this.description = description;
+    this.priority = priority;
+    this.dueDate = dueDate;
+  }
+}
+
 function showToDoDetails() {
   el.ongoingToDos.addEventListener("click", (e) => {
     const tblRow1 = document.createElement("tr");
     tblRow1.setAttribute("class", "bg-white border-4 border-gray-200");
     if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
       el.toDos.forEach((toDo) => {
-        if (e.target.parentElement.parentElement.textContent === toDo.title) {
+        if (e.target.parentElement.parentElement.textContent === toDo.toDoTitle) {
           const tBody = [
-            toDo.title,
+            toDo.toDoTitle,
             toDo.description,
             toDo.dueDate,
             toDo.priority,
@@ -91,12 +101,12 @@ function addToDo() {
         console.log("Title is used already");
       }
     });
-    let myToDo = Project.addToDoItem(
+    let myToDo = new ToDo (
+      el.proValue.value,
       el.toDoTitle.value,
       el.toDoDesc.value,
       el.priValue.value,
       el.toDoDate.value,
-      el.proValue.value
     );
     el.toDos.push(myToDo);
     store.addToDoToStore(myToDo);

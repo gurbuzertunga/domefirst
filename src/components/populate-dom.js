@@ -15,8 +15,8 @@ function populateDom() {
       caret.setAttribute("class", "fas fa-angle-down fa-2x cursor-pointer");
       const trashIcon = document.createElement("i");
       trashIcon.setAttribute("class", "fas fa-trash cursor-pointer");
-      newToDo.textContent = toDo.title;
-      newToDo.setAttribute("id", toDo.title);
+      newToDo.textContent = toDo.toDoTitle;
+      newToDo.setAttribute("id", toDo.toDoTitle);
       newToDo.setAttribute("class", "flex justify-between bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none");
       icons.appendChild(caret);
       icons.appendChild(trashIcon);
