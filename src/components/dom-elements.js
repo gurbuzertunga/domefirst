@@ -10,6 +10,7 @@ const toDoSubmit = document.getElementById('submit-todo');
 const ongoingToDos = document.getElementById('ongoing-todos');
 const form = document.getElementById('form');
 const formContainer = document.querySelector('div.form-container');
+// // eslint-disable
 let toDos = [];
 let projects = [];
 let myToDos = [];
@@ -18,6 +19,7 @@ let priValue = toDoPri.options[toDoPri.selectedIndex];
 let newProject;
 let formProject;
 let proValue = '';
+// eslint-enable
 
 // Table Elements
 const detailsTbl = document.createElement('table');
