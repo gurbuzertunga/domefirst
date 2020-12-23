@@ -7,14 +7,14 @@ function populateDomByProject() {
       el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
     }
     el.toDos.forEach((toDo) => {
-      if (e.target.textContent === toDo.title) {
+      if (e.target.textContent === toDo.toDoTitle) {
         const newToDo = document.createElement('li');
         newToDo.setAttribute(
           'class',
           'flex justify-between items-center bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none',
         );
         el.ongoingToDos.appendChild(newToDo);
-        newToDo.textContent = toDo.title;
+        newToDo.textContent = toDo.toDoTitle;
         const trashIcon = document.createElement('i');
         trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
         newToDo.appendChild(trashIcon);
