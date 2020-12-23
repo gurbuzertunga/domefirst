@@ -3,7 +3,7 @@ import { Project } from './project-logic';
 
 
 const store = (() => {
-  function getToDoFromStore() {
+  const getToDoFromStore = () => {
     if (localStorage.getItem("localToDos") === null) {
       el.toDos = [];
     } else {
@@ -12,7 +12,7 @@ const store = (() => {
     return el.toDos;
   }
 
-  function getProjectFromStore() {
+  const getProjectFromStore = () => {
     if (localStorage.getItem("localProjects") === null) {
       el.projects = [];
     } else {
@@ -21,20 +21,20 @@ const store = (() => {
     return el.projects;
   }
 
-  function addToDoToStore(toDo) {
-    el.toDos = Store.getToDoFromStore();
+  const addToDoToStore = (toDo) => {
+    el.toDos = store.getToDoFromStore();
     el.toDos.push(toDo);
 
     localStorage.setItem("localToDos", JSON.stringify(el.toDos));
   }
 
   const addProjectToStore = (project) => {
-    el.projects = Store.getProjectFromStore();
+    el.projects = store.getProjectFromStore();
     el.projects.push(project);
     localStorage.setItem("localProjects", JSON.stringify(el.projects));
   }
 
-  function removeToDoFromStore(title) {
+  const removeToDoFromStore = (title) => {
     el.toDos = Store.getToDoFromStore();
     el.toDos.forEach((toDo) => {
       if (toDo.title === title) {
@@ -44,8 +44,8 @@ const store = (() => {
     localStorage.setItem("localToDos", JSON.stringify(el.toDos));
   }
 
-  function removeProjectFromStore(title) {
-    el.projects = Store.getProjectFromStore();
+  const removeProjectFromStore = (title) => {
+    el.projects = store.getProjectFromStore();
     el.projects.forEach((project, index) => {
       if (project.title === title) {
         el.projects.splice(index, 1);
@@ -53,6 +53,8 @@ const store = (() => {
     });
     localStorage.setItem("localProjects", JSON.stringify(el.projects));
   }
+
+  return {removeProjectFromStore, removeToDoFromStore, addProjectToStore, addToDoToStore, getProjectFromStore, getToDoFromStore}
   })();
 
 
@@ -102,7 +104,7 @@ function populateDom() {
     el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
   }
 
-  Array.from(Store.getToDoFromStore()).forEach((toDo) => {
+  Array.from(store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement("li");
     const icons = document.createElement('span');
     icons.setAttribute('class', 'flex justify-between items-center w-12');
@@ -125,7 +127,7 @@ function populateDom() {
   while (el.projectList.firstChild) {
     el.projectList.removeChild(el.projectList.firstChild);
   }
-  Array.from(Store.getProjectFromStore()).forEach((project) => {
+  Array.from(store.getProjectFromStore()).forEach((project) => {
     el.newProject = document.createElement("li");
     el.formProject = document.createElement("option");
     el.newProject.setAttribute("id", project.title);
@@ -202,7 +204,7 @@ function addToDo() {
       el.proValue.value
     );
     el.toDos.push(myToDo);
-    Store.addToDoToStore(myToDo);
+    store.addToDoToStore(myToDo);
     populateDom();
   //     }
      
@@ -215,7 +217,7 @@ function removeToDo() {
     let b = e.target.parentElement.parentElement.textContent;
     let a = e.target;
     if (a.className === "fas fa-trash cursor-pointer") {
-      Store.removeToDoFromStore(b);
+      store.removeToDoFromStore(b);
       e.target.parentElement.parentElement.remove();
     }
   });
@@ -250,5 +252,5 @@ export {
   populateDom,
   populateDomByProject,
   showToDoDetails,
-  Store
 };
+export default store;

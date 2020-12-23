@@ -1,5 +1,5 @@
 import * as el from './dom-elements';
-import Store from './todo-logic';
+import store from './todo-logic';
 import populateDom from './todo-logic';
 import populateDomByProject from './todo-logic';
 
@@ -16,7 +16,7 @@ function newProjects() {
     el.newProjectConfirm.addEventListener("click", () => {
       let myNewProject = new Project(el.newProjectField.value);
       el.projects.push(myNewProject);
-      Store.addProjectToStore(myNewProject);
+      store.addProjectToStore(myNewProject);
       populateDom();
       populateDomByProject();
     });
@@ -25,10 +25,10 @@ function newProjects() {
 function removeProject() {
     el.projectList.addEventListener("click", (e) => {
       if (e.target.className === "fas fa-trash cursor-pointer") {
-        Store.removeProjectFromStore(e.target.parentElement.textContent);
-        Store.getToDoFromStore().forEach((toDo) => {
+        store.removeProjectFromStore(e.target.parentElement.textContent);
+        store.getToDoFromStore().forEach((toDo) => {
           if (e.target.parentElement.textContent === toDo.projectTitle) {
-            Store.removeToDoFromStore(toDo.title);
+            store.removeToDoFromStore(toDo.title);
             document.getElementById(toDo.title).remove();
           }
         });
