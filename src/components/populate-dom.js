@@ -1,8 +1,7 @@
 import * as el from './dom-elements';
 import store from './local-storage';
-import { editToDo } from './todo-logic';
 
-function populateDomByProject() {
+const populateDomByProject = () => {
   el.projectList.addEventListener('click', (e) => {
     while (el.ongoingToDos.firstChild) {
       el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
@@ -22,9 +21,9 @@ function populateDomByProject() {
       }
     });
   });
-}
+};
 
-function populateDom() {
+const populateDom = () => {
   while (el.ongoingToDos.firstChild) {
     el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
   }
@@ -82,14 +81,14 @@ function populateDom() {
     el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
   });
   populateDomByProject();
-  
+
   return el.proValue;
-}
+};
 
 const clearForm = () => {
   el.toDoTitle.value = '';
   el.toDoDesc.value = '';
   el.toDoDate.value = '';
-}
+};
 
 export { populateDom, populateDomByProject, clearForm };

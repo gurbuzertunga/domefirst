@@ -30,7 +30,7 @@ class ToDo extends Project {
   }
 }
 
-function showToDoDetails() {
+const showToDoDetails = () => {
   el.ongoingToDos.addEventListener('click', (e) => {
     const tblRow1 = document.createElement('tr');
     tblRow1.setAttribute('class', 'bg-white border-4 border-gray-200');
@@ -70,9 +70,51 @@ function showToDoDetails() {
       e.target.className = 'fas fa-angle-down fa-2x cursor-pointer';
     }
   });
-}
+};
 
-function addToDo() {
+const editToDo = () => {
+  Array.from(store.getToDoFromStore()).forEach((toDo) => {
+    const editButton = document.getElementById(toDo.toDoTitle);
+    editButton.addEventListener('click', (e) => {
+      document.getElementById('label-project-titles').style.display = 'none';
+      el.projectTitles.style.display = 'none';
+      el.toDoSubmit.style.display = 'none';
+      el.form.insertAdjacentElement('beforeEnd', el.toDoEdit);
+      document.querySelector('div.form-container h2').textContent = 'Edit a ToDo Item';
+
+      const a = e.target.parentElement.parentElement.textContent;
+
+      if (toDo.toDoTitle === a) {
+        el.toDoTitle.value = toDo.toDoTitle;
+        el.toDoDesc.value = toDo.description;
+        el.priValue.value = toDo.priority;
+        el.proValue.value = toDo.title;
+        el.toDoDate.value = toDo.dueDate;
+      }
+      el.toDoEdit.addEventListener('click', (e) => {
+        e.preventDefault();
+        const editItem = {
+          title: el.proValue.value,
+          toDoTitle: el.toDoTitle.value,
+          description: el.toDoDesc.value,
+          priority: el.priValue.value,
+          dueDate: el.toDoDate.value,
+        };
+        store.updateToDoInStore(editItem, toDo);
+        populateDom();
+        el.toDoEdit.style.display = 'none';
+        el.toDoSubmit.style.display = 'block';
+        document.querySelector('div.form-container h2').textContent = 'Create a ToDo Item';
+
+        document.getElementById('label-project-titles').style.display = 'block';
+        el.projectTitles.style.display = 'block';
+        clearForm();
+      });
+    });
+  });
+};
+
+const addToDo = () => {
   el.toDoSubmit.addEventListener('click', (e) => {
     e.preventDefault();
     if (store.getToDoFromStore().some((toDo) => toDo.toDoTitle === el.toDoTitle.value)) {
@@ -106,14 +148,13 @@ function addToDo() {
       el.toDos.push(myToDo);
       store.addToDoToStore(myToDo);
       populateDom();
-      
     }
+    editToDo();
     clearForm();
   });
- 
-}
+};
 
-function removeToDo() {
+const removeToDo = () => {
   el.ongoingToDos.addEventListener('click', (e) => {
     const b = e.target.parentElement.parentElement.textContent;
     const a = e.target;
@@ -122,36 +163,8 @@ function removeToDo() {
       e.target.parentElement.parentElement.remove();
     }
   });
-}
+};
 
-const editToDo = () => {
-    Array.from(store.getToDoFromStore()).forEach((toDo) => {
-      const editButton = document.getElementById(toDo.toDoTitle);
-      editButton.addEventListener('click',(e) => {
-        el.toDoSubmit.style.display = 'none';
-        form.insertAdjacentElement('beforeEnd',el.toDoEdit);
-        document.querySelector('div.form-container h2').textContent = 'Edit a ToDo Item';
-        el.toDoSubmit.textContent = 'Edit an Item';
-        const a = e.target.parentElement.parentElement.textContent;
-        
-      if (toDo.toDoTitle === a) {
-        el.toDoTitle.value = toDo.toDoTitle;
-        el.toDoDesc.value = toDo.description;
-        el.priValue.value =  toDo.priority;
-        el.proValue.value = toDo.title;
-        el.toDoDate.value = toDo.dueDate;
-        
-      }
-      el.toDoEdit.addEventListener('click', (e) => {
-        e.preventDefault();
-        const editItem = {title:el.proValue.value,toDoTitle:el.toDoTitle.value,description:el.toDoDesc.value,priority:el.priValue.value,dueDate:el.toDoDate.value };
-        store.updateToDoInStore(editItem, toDo);
-        populateDom();
-      })
-    })
-  }
-)
-}
 
 export {
   addToDo,

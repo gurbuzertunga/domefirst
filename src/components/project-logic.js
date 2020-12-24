@@ -8,7 +8,7 @@ class Project {
   }
 }
 
-function createDefaultProject() {
+const createDefaultProject = () => {
   if (localStorage.getItem('localProjects') === null) {
     const myDefaultProject = new Project('House chores');
     el.projects.push(myDefaultProject);
@@ -23,9 +23,9 @@ function createDefaultProject() {
     ].defaultSelected = true;
     populateDom();
   }
-}
+};
 
-function newProjects() {
+const newProjects = () => {
   const alertContainer = document.querySelector('div.projects p');
   el.newProjectConfirm.addEventListener('click', () => {
     if (el.newProjectField.value === '') {
@@ -60,9 +60,9 @@ function newProjects() {
       populateDomByProject();
     }
   });
-}
+};
 
-function removeProject() {
+const removeProject = () => {
   el.projectList.addEventListener('click', (e) => {
     if (e.target.className === 'fas fa-trash cursor-pointer') {
       store.removeProjectFromStore(e.target.parentElement.textContent);
@@ -80,7 +80,7 @@ function removeProject() {
       });
     }
   });
-}
+};
 
 export {
   newProjects,
