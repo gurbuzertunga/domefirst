@@ -9,15 +9,26 @@ const populateDomByProject = () => {
     store.getToDoFromStore().forEach((toDo) => {
       if (e.target.textContent === toDo.title) {
         const newToDo = document.createElement('li');
-        newToDo.setAttribute(
-          'class',
-          'flex justify-between items-center bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none',
-        );
-        newToDo.textContent = toDo.toDoTitle;
-        el.ongoingToDos.appendChild(newToDo);
-        const trashIcon = document.createElement('i');
-        trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
-        newToDo.appendChild(trashIcon);
+    const icons = document.createElement('span');
+    icons.setAttribute('class', 'flex justify-between items-center w-24');
+    const caret = document.createElement('i');
+    caret.setAttribute('class', 'fas fa-angle-down fa-2x cursor-pointer');
+    const trashIcon = document.createElement('i');
+    trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
+    const edit = document.createElement('i');
+    edit.setAttribute('class', 'fas fa-edit cursor-pointer');
+    edit.setAttribute('id', toDo.toDoTitle);
+    newToDo.textContent = toDo.toDoTitle;
+    newToDo.setAttribute('id', toDo.toDoTitle);
+    newToDo.setAttribute(
+      'class',
+      'flex justify-between bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none',
+    );
+    icons.appendChild(edit);
+    icons.appendChild(caret);
+    icons.appendChild(trashIcon);
+    newToDo.appendChild(icons);
+    el.ongoingToDos.appendChild(newToDo);
       }
     });
   });
