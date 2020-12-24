@@ -145,9 +145,8 @@ const editToDo = () => {
       el.toDoEdit.addEventListener('click', (e) => {
         e.preventDefault();
         const editItem = {title:el.proValue.value,toDoTitle:el.toDoTitle.value,description:el.toDoDesc.value,priority:el.priValue.value,dueDate:el.toDoDate.value };
-        console.log(editItem);
-        console.log(toDo);
         store.updateToDoInStore(editItem, toDo);
+        populateDom();
       })
     })
   }
