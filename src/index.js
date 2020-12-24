@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { addToDo, removeToDo, showToDoDetails } from './components/todo-logic';
+import { addToDo, removeToDo, showToDoDetails, editToDo } from './components/todo-logic';
 import { newProjects, removeProject, createDefaultProject } from './components/project-logic';
 import { populateDom, populateDomByProject } from './components/populate-dom';
 
@@ -12,3 +12,4 @@ populateDom();
 populateDomByProject();
 showToDoDetails();
 createDefaultProject();
+editToDo();

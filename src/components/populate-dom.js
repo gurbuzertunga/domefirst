@@ -1,5 +1,6 @@
 import * as el from './dom-elements';
 import store from './local-storage';
+import { editToDo } from './todo-logic';
 
 function populateDomByProject() {
   el.projectList.addEventListener('click', (e) => {
@@ -31,17 +32,21 @@ function populateDom() {
   Array.from(store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement('li');
     const icons = document.createElement('span');
-    icons.setAttribute('class', 'flex justify-between items-center w-12');
+    icons.setAttribute('class', 'flex justify-between items-center w-24');
     const caret = document.createElement('i');
     caret.setAttribute('class', 'fas fa-angle-down fa-2x cursor-pointer');
     const trashIcon = document.createElement('i');
     trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
+    const edit = document.createElement('i');
+    edit.setAttribute('class', 'fas fa-edit cursor-pointer');
+    edit.setAttribute('id', toDo.toDoTitle);
     newToDo.textContent = toDo.toDoTitle;
     newToDo.setAttribute('id', toDo.toDoTitle);
     newToDo.setAttribute(
       'class',
       'flex justify-between bg-gray-100 px-2 rounded-md mb-4 border-double border-4 outline-none',
     );
+    icons.appendChild(edit);
     icons.appendChild(caret);
     icons.appendChild(trashIcon);
     newToDo.appendChild(icons);
@@ -77,7 +82,14 @@ function populateDom() {
     el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
   });
   populateDomByProject();
+  
   return el.proValue;
 }
 
-export { populateDom, populateDomByProject };
+const clearForm = () => {
+  el.toDoTitle.value = '';
+  el.toDoDesc.value = '';
+  el.toDoDate.value = '';
+}
+
+export { populateDom, populateDomByProject, clearForm };

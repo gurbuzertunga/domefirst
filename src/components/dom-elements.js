@@ -7,9 +7,15 @@ const toDoDesc = document.getElementById('description');
 const toDoPri = document.getElementById('priority');
 const toDoDate = document.getElementById('date');
 const toDoSubmit = document.getElementById('submit-todo');
+const toDoEdit = document.createElement('button');
+toDoEdit.setAttribute('id','edit-toDo');
+toDoEdit.setAttribute('type','submit');
+toDoEdit.textContent = 'Edit a ToDo Item';
+toDoEdit.setAttribute('class','cursor-pointer bg-gray-900 text-white text-xl rounded p-2 w-full mx-auto my-5');
 const ongoingToDos = document.getElementById('ongoing-todos');
 const form = document.getElementById('form');
 const formContainer = document.querySelector('div.form-container');
+
 /* eslint-disable */
 let toDos = [];
 let projects = [];
@@ -19,6 +25,7 @@ let priValue = toDoPri.options[toDoPri.selectedIndex];
 let newProject;
 let formProject;
 let proValue = '';
+
 /* eslint-enable */
 
 // Table Elements
@@ -71,4 +78,5 @@ export {
   formContainer,
   myToDos,
   myProjects,
+  toDoEdit,
 };

@@ -52,6 +52,16 @@ const store = (() => {
     localStorage.setItem('localProjects', JSON.stringify(el.myProjects));
   };
 
+  const updateToDoInStore = (newToDo, oldToDo) => {
+    el.myToDos = store.getToDoFromStore();
+    el.myToDos.forEach((toDo, index) => {
+      if (toDo === oldToDo) {
+        el.myToDos.splice(index,1, newToDo);
+      }
+    });
+    localStorage.setItem('localToDos', JSON.stringify(el.myToDos));
+  }
+
   return {
     removeProjectFromStore,
     removeToDoFromStore,
@@ -59,6 +69,7 @@ const store = (() => {
     addToDoToStore,
     getProjectFromStore,
     getToDoFromStore,
+    updateToDoInStore,
   };
 })();
 

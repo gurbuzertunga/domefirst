@@ -21,6 +21,7 @@ function createDefaultProject() {
     el.projectTitles.options[
       el.projectTitles.selectedIndex
     ].defaultSelected = true;
+    populateDom();
   }
 }
 

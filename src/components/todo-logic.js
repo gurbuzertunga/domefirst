@@ -1,6 +1,6 @@
 import * as el from './dom-elements';
 import { Project } from './project-logic';
-import { populateDom } from './populate-dom';
+import { clearForm, populateDom } from './populate-dom';
 import store from './local-storage';
 
 const selectChangePri = () => {
@@ -106,8 +106,11 @@ function addToDo() {
       el.toDos.push(myToDo);
       store.addToDoToStore(myToDo);
       populateDom();
+      
     }
+    clearForm();
   });
+ 
 }
 
 function removeToDo() {
@@ -121,8 +124,39 @@ function removeToDo() {
   });
 }
 
+const editToDo = () => {
+    Array.from(store.getToDoFromStore()).forEach((toDo) => {
+      const editButton = document.getElementById(toDo.toDoTitle);
+      editButton.addEventListener('click',(e) => {
+        el.toDoSubmit.style.display = 'none';
+        form.insertAdjacentElement('beforeEnd',el.toDoEdit);
+        document.querySelector('div.form-container h2').textContent = 'Edit a ToDo Item';
+        el.toDoSubmit.textContent = 'Edit an Item';
+        const a = e.target.parentElement.parentElement.textContent;
+        
+      if (toDo.toDoTitle === a) {
+        el.toDoTitle.value = toDo.toDoTitle;
+        el.toDoDesc.value = toDo.description;
+        el.priValue.value =  toDo.priority;
+        el.proValue.value = toDo.title;
+        el.toDoDate.value = toDo.dueDate;
+        
+      }
+      el.toDoEdit.addEventListener('click', (e) => {
+        e.preventDefault();
+        const editItem = {title:el.proValue.value,toDoTitle:el.toDoTitle.value,description:el.toDoDesc.value,priority:el.priValue.value,dueDate:el.toDoDate.value };
+        console.log(editItem);
+        console.log(toDo);
+        store.updateToDoInStore(editItem, toDo);
+      })
+    })
+  }
+)
+}
+
 export {
   addToDo,
   removeToDo,
   showToDoDetails,
+  editToDo,
 };
