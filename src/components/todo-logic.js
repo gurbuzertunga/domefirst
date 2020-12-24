@@ -80,6 +80,7 @@ const editToDo = () => {
       el.projectTitles.style.display = 'none';
       el.toDoSubmit.style.display = 'none';
       el.form.insertAdjacentElement('beforeEnd', el.toDoEdit);
+      el.toDoEdit.style.display = 'block';
       document.querySelector('div.form-container h2').textContent = 'Edit a ToDo Item';
 
       const a = e.target.parentElement.parentElement.textContent;
