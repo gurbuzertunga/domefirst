@@ -30,7 +30,7 @@ This project was a task by [Microverse Inc.](https://www.microverse.org/) to bui
 ## App Deployment
 The built app is published through Github pages <br />
 
-### You can see live version [here](#)
+### You can see live version [here](https://infallible-bhabha-bbf43b.netlify.app/)
 
 ## 🔧 Built with<a name = "with"></a>
 
