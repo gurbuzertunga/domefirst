@@ -4,6 +4,7 @@ import { clearForm, populateDom } from './populate-dom';
 import store from './local-storage';
 
 const selectChangePri = () => {
+  console.log(el.toDoPri);
   el.toDoPri.addEventListener('change', () => {
     el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
     return el.priValue.value;
@@ -172,4 +173,6 @@ export {
   removeToDo,
   showToDoDetails,
   editToDo,
+  selectChangePro,
+  selectChangePri,
 };
