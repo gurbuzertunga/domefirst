@@ -21,7 +21,7 @@ let toDos = [];
 let projects = [];
 let myToDos = [];
 let myProjects = [];
-let priValue = toDoPri.options[toDoPri.selectedIndex];
+let priValue;
 let newProject;
 let formProject;
 let proValue = '';

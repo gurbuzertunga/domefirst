@@ -3,23 +3,16 @@ import { Project } from './project-logic';
 import { clearForm, populateDom } from './populate-dom';
 import store from './local-storage';
 
-const selectChangePri = () => {
-  console.log(el.toDoPri);
   el.toDoPri.addEventListener('change', () => {
-    el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
-    return el.priValue.value;
+    return el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
   });
-};
 
-const selectChangePro = () => {
   el.projectTitles.addEventListener('change', () => {
     el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
-    return el.proValue.value;
-  });
-};
+  }); 
 
-selectChangePri();
-selectChangePro();
+// selectChangePri();
+// console.log(selectChangePro());
 
 class ToDo extends Project {
   constructor(title, toDoTitle, description, priority, dueDate) {
@@ -73,48 +66,50 @@ const showToDoDetails = () => {
   });
 };
 
-const editToDo = () => {
-  Array.from(store.getToDoFromStore()).forEach((toDo) => {
-    const editButton = document.getElementById(toDo.toDoTitle);
-    editButton.addEventListener('click', (e) => {
-      document.getElementById('label-project-titles').style.display = 'none';
-      el.projectTitles.style.display = 'none';
-      el.toDoSubmit.style.display = 'none';
-      el.form.insertAdjacentElement('beforeEnd', el.toDoEdit);
-      el.toDoEdit.style.display = 'block';
-      document.querySelector('div.form-container h2').textContent = 'Edit a ToDo Item';
+// const editToDo = () => {
+//   console.log(el.form);
+//   Array.from(store.getToDoFromStore()).forEach((toDo) => {
+//     const editButton = document.getElementById(toDo.toDoTitle);
+//     editButton.addEventListener('click', (e) => {
+//       document.getElementById('label-project-titles').style.display = 'none';
+//       el.projectTitles.style.display = 'none';
+//       el.toDoSubmit.style.display = 'none';
 
-      const a = e.target.parentElement.parentElement.textContent;
+//       el.form.insertAdjacentElement('beforeEnd', el.toDoEdit);
+//       el.toDoEdit.style.display = 'block';
+//       document.querySelector('div.form-container h2').textContent = 'Edit a ToDo Item';
 
-      if (toDo.toDoTitle === a) {
-        el.toDoTitle.value = toDo.toDoTitle;
-        el.toDoDesc.value = toDo.description;
-        el.priValue.value = toDo.priority;
-        el.proValue.value = toDo.title;
-        el.toDoDate.value = toDo.dueDate;
-      }
-      el.toDoEdit.addEventListener('click', (e) => {
-        e.preventDefault();
-        const editItem = {
-          title: el.proValue.value,
-          toDoTitle: el.toDoTitle.value,
-          description: el.toDoDesc.value,
-          priority: el.priValue.value,
-          dueDate: el.toDoDate.value,
-        };
-        store.updateToDoInStore(editItem, toDo);
-        populateDom();
-        el.toDoEdit.style.display = 'none';
-        el.toDoSubmit.style.display = 'block';
-        document.querySelector('div.form-container h2').textContent = 'Create a ToDo Item';
+//       const a = e.target.parentElement.parentElement.textContent;
 
-        document.getElementById('label-project-titles').style.display = 'block';
-        el.projectTitles.style.display = 'block';
-        clearForm();
-      });
-    });
-  });
-};
+//       if (toDo.toDoTitle === a) {
+//         el.toDoTitle.value = toDo.toDoTitle;
+//         el.toDoDesc.value = toDo.description;
+//         el.priValue.textContent = toDo.priority;
+//         el.proValue.value = toDo.title;
+//         el.toDoDate.value = toDo.dueDate;
+//       }
+//       el.toDoEdit.addEventListener('click', (e) => {
+//         e.preventDefault();
+//         const editItem = {
+//           title: el.proValue.value,
+//           toDoTitle: el.toDoTitle.value,
+//           description: el.toDoDesc.value,
+//           priority: el.priValue.value,
+//           dueDate: el.toDoDate.value,
+//         };
+//         store.updateToDoInStore(editItem, toDo);
+//         populateDom();
+//         el.toDoEdit.style.display = 'none';
+//         el.toDoSubmit.style.display = 'block';
+//         document.querySelector('div.form-container h2').textContent = 'Create a ToDo Item';
+
+//         document.getElementById('label-project-titles').style.display = 'block';
+//         el.projectTitles.style.display = 'block';
+//         clearForm();
+//       });
+//     });
+//   });
+// };
 
 const addToDo = () => {
   el.toDoSubmit.addEventListener('click', (e) => {
@@ -127,8 +122,8 @@ const addToDo = () => {
         'class',
         'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
       );
-      el.form.insertAdjacentElement('beforeBegin', alert);
-      setTimeout(() => document.getElementById('alert').remove(), 2000);
+      // el.form.insertAdjacentElement('beforeBegin', alert);
+      // setTimeout(() => document.getElementById('alert').remove(), 2000);
     } else if (el.toDoTitle.value === '' || el.toDoDesc.value === '') {
       const alert = document.createElement('div');
       alert.innerHTML = 'The form fields cannot be blank!';
@@ -137,8 +132,8 @@ const addToDo = () => {
         'class',
         'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
       );
-      el.form.insertAdjacentElement('beforeBegin', alert);
-      setTimeout(() => document.getElementById('alert').remove(), 2000);
+      // el.form.insertAdjacentElement('beforeBegin', alert);
+      // setTimeout(() => document.getElementById('alert').remove(), 2000);
     } else {
       const myToDo = new ToDo(
         el.proValue.value,
@@ -173,6 +168,4 @@ export {
   removeToDo,
   showToDoDetails,
   editToDo,
-  selectChangePro,
-  selectChangePri,
 };

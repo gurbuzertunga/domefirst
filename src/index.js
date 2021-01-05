@@ -5,8 +5,6 @@ import {
   removeToDo,
   showToDoDetails,
   editToDo,
-  selectChangePro,
-  selectChangePri,
 } from "./components/todo-logic";
 import {
   newProjects,
