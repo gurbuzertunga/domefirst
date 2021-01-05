@@ -31,9 +31,7 @@ let proValue = '';
 // Table Elements
 const detailsTbl = document.createElement('table');
 detailsTbl.setAttribute('class', 'w-4/5 table-auto mx-auto my-5');
-document
-  .querySelector('.container')
-  .insertAdjacentElement('afterend', detailsTbl);
+const topWrapper = document.querySelector('.container');
 detailsTbl.style.display = 'none';
 const tblHead = document.createElement('thead');
 tblHead.setAttribute('class', 'justify-between text-white');
@@ -51,6 +49,7 @@ detailsArr.forEach((heading) => {
 const tblBody = document.createElement('tbody');
 tblBody.setAttribute('class', 'bg-gray-200');
 detailsTbl.appendChild(tblBody);
+// topWrapper.appendChild(detailsTbl);
 
 export {
   toDos,
@@ -79,4 +78,5 @@ export {
   myToDos,
   myProjects,
   toDoEdit,
+  topWrapper,
 };
