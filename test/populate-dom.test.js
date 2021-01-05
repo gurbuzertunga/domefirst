@@ -1,10 +1,4 @@
-import { calc } from '../src/calc';
 import { populateDom } from '../src/components/populate-dom';
-
-test('Test calc', () => {
-  expect(calc(1, 2)).toBeInstanceOf(Array);
-});
-
 
 describe('Test PopulateDom', () => {
   const expected = '<option value="House chores">House chores</option>';
