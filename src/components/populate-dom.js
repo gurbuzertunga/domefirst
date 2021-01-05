@@ -93,7 +93,7 @@ const populateDom = () => {
   });
   populateDomByProject();
 
-  return el.proValue;
+  console.log(el.proValue);
 };
 
 const clearForm = () => {

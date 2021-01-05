@@ -3,16 +3,23 @@ import { Project } from "./project-logic";
 import { clearForm, populateDom } from "./populate-dom";
 import store from "./local-storage";
 
-el.toDoPri.addEventListener("change", () => {
-  return (el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex]);
-});
+const selectChangePri = () => {
+  el.toDoPri.addEventListener("change", () => {
+    el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
+  });
+  return el.priValue;
+};
 
-el.projectTitles.addEventListener("change", () => {
-  el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
-});
+selectChangePri();
 
-// selectChangePri();
-// console.log(selectChangePro());
+const selectChangePro = () => {
+  el.projectTitles.addEventListener("change", () => {
+    el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
+  });
+  return el.proValue;
+};
+
+selectChangePro();
 
 class ToDo extends Project {
   constructor(title, toDoTitle, description, priority, dueDate) {
@@ -171,4 +178,4 @@ const removeToDo = () => {
   });
 };
 
-export { addToDo, removeToDo, showToDoDetails, editToDo };
+export { addToDo, removeToDo, showToDoDetails, editToDo, ToDo };
