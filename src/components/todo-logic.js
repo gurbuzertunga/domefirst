@@ -25,8 +25,6 @@ const selectChangePro = () => {
 
 selectChangePro();
 
-console.log(el.priValue);
-
 class ToDo extends Project {
   constructor(title, toDoTitle, description, priority, dueDate) {
     super(title);
