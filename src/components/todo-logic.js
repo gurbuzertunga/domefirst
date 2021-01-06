@@ -127,47 +127,49 @@ const editToDo = () => {
 };
 
 const addToDo = () => {
-  el.toDoSubmit.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (
-      store
-        .getToDoFromStore()
-        .some((toDo) => toDo.toDoTitle === el.toDoTitle.value)
-    ) {
-      const alert = document.createElement('div');
-      alert.innerHTML = `${el.toDoTitle.value} is already used, type another title`;
-      alert.setAttribute('id', 'alert');
-      alert.setAttribute(
-        'class',
-        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
-      );
-      el.form.insertAdjacentElement('beforeBegin', alert);
-      setTimeout(() => document.getElementById('alert').remove(), 2000);
-    } else if (el.toDoTitle.value === '' || el.toDoDesc.value === '') {
-      const alert = document.createElement('div');
-      alert.innerHTML = 'The form fields cannot be blank!';
-      alert.setAttribute('id', 'alert');
-      alert.setAttribute(
-        'class',
-        'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
-      );
-      el.form.insertAdjacentElement('beforeBegin', alert);
-      setTimeout(() => document.getElementById('alert').remove(), 2000);
-    } else {
-      const myToDo = new ToDo(
-        el.proValue.value,
-        el.toDoTitle.value,
-        el.toDoDesc.value,
-        el.toDoPri.value,
-        el.toDoDate.value,
-      );
-      el.toDos.push(myToDo);
-      store.addToDoToStore(myToDo);
-      populateDom();
-    }
-    editToDo();
-    clearForm();
-  });
+  if (el.toDoSubmit) {
+    el.toDoSubmit.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (
+        store
+          .getToDoFromStore()
+          .some((toDo) => toDo.toDoTitle === el.toDoTitle.value)
+      ) {
+        const alert = document.createElement('div');
+        alert.innerHTML = `${el.toDoTitle.value} is already used, type another title`;
+        alert.setAttribute('id', 'alert');
+        alert.setAttribute(
+          'class',
+          'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
+        );
+        el.form.insertAdjacentElement('beforeBegin', alert);
+        setTimeout(() => document.getElementById('alert').remove(), 2000);
+      } else if (el.toDoTitle.value === '' || el.toDoDesc.value === '') {
+        const alert = document.createElement('div');
+        alert.innerHTML = 'The form fields cannot be blank!';
+        alert.setAttribute('id', 'alert');
+        alert.setAttribute(
+          'class',
+          'bg-red-200 relative text-red-800 py-3 px-3 rounded-lg text-xl text-center',
+        );
+        el.form.insertAdjacentElement('beforeBegin', alert);
+        setTimeout(() => document.getElementById('alert').remove(), 2000);
+      } else {
+        const myToDo = new ToDo(
+          el.proValue.value,
+          el.toDoTitle.value,
+          el.toDoDesc.value,
+          el.toDoPri.value,
+          el.toDoDate.value,
+        );
+        el.toDos.push(myToDo);
+        store.addToDoToStore(myToDo);
+        populateDom();
+      }
+      editToDo();
+      clearForm();
+    });
+  }
 };
 
 const removeToDo = () => {

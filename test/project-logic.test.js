@@ -1,4 +1,4 @@
-import { Project } from '../src/components/project-logic';
+import { removeProject, Project } from '../src/components/project-logic';
 
 describe('test project logic', () => {
   const ourProject = new Project('Default');
@@ -8,5 +8,9 @@ describe('test project logic', () => {
 
   test('can create instance of Project class', () => {
     expect(ourProject).toBeInstanceOf(Project);
+  });
+
+  test('removeProject() is defined', () => {
+    expect(removeProject).toBeDefined();
   });
 });

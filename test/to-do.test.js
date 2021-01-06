@@ -1,4 +1,4 @@
-import { ToDo } from '../src/components/todo-logic';
+import { ToDo, addToDo } from '../src/components/todo-logic';
 
 describe('toDo logic tests', () => {
   const ourToDo = new ToDo();

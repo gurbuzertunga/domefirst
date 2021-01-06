@@ -78,28 +78,27 @@ const populateDom = () => {
     while (el.projectList.firstChild) {
       el.projectList.removeChild(el.projectList.firstChild);
     }
+    Array.from(store.getProjectFromStore()).forEach((project) => {
+      el.newProject = document.createElement('li');
+      el.formProject = document.createElement('option');
+      el.newProject.setAttribute('id', project.title);
+      el.newProject.setAttribute(
+        'class',
+        'flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none',
+      );
+      el.formProject.setAttribute('value', project.title);
+      el.newProject.textContent = project.title;
+      if (project.title !== 'House chores') {
+        const trashIcon = document.createElement('i');
+        trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
+        el.newProject.appendChild(trashIcon);
+      }
+      el.formProject.textContent = project.title;
+      el.projectList.appendChild(el.newProject);
+      el.projectTitles.appendChild(el.formProject);
+      el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
+    });
   }
-
-  Array.from(store.getProjectFromStore()).forEach((project) => {
-    el.newProject = document.createElement('li');
-    el.formProject = document.createElement('option');
-    el.newProject.setAttribute('id', project.title);
-    el.newProject.setAttribute(
-      'class',
-      'flex justify-between cursor-pointer bg-gray-100 px-2 items-center rounded-md mb-4 border-gray-800 border-double border-4 outline-none',
-    );
-    el.formProject.setAttribute('value', project.title);
-    el.newProject.textContent = project.title;
-    if (project.title !== 'House chores') {
-      const trashIcon = document.createElement('i');
-      trashIcon.setAttribute('class', 'fas fa-trash cursor-pointer');
-      el.newProject.appendChild(trashIcon);
-    }
-    el.formProject.textContent = project.title;
-    el.projectList.appendChild(el.newProject);
-    el.projectTitles.appendChild(el.formProject);
-    el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
-  });
   populateDomByProject();
   return el.proValue;
 };
