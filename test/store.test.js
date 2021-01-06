@@ -35,5 +35,13 @@ describe('Testing store class', () => {
     myMock();
     expect(myMock).toHaveBeenCalledTimes(2);
   });
+
+  test('local storage getToDoFromStore returns instance of Array', () => {
+    expect(store.getToDoFromStore()).toBeInstanceOf(Array);
+  });
+
+  test('local storage getProjectFromStore returns instance of Array', () => {
+    expect(store.getProjectFromStore()).toBeInstanceOf(Array);
+  });
 });
 
