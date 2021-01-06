@@ -5,4 +5,8 @@ describe('toDo logic tests', () => {
   test('can create instance of class ToDo', () => {
     expect(ourToDo).toBeInstanceOf(ToDo);
   });
+
+  test('ToDo is Defined', () => {
+    expect(ToDo).toBeDefined();
+  });
 });
