@@ -21,7 +21,7 @@ A digital todo list application to keep track of your todo tasks.
 <a href="#usage">Usage</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#app">App</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#with">Built With</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#with">Tested With</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#test">Tested With</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#author">Author</a>
 
 
@@ -71,8 +71,8 @@ With the installations above complete, you are set to use the code and view the 
 ### Tools used:
 - Jest.
 
-### Run the test
-- run ``npm run test`` or ``npm run testwatch`` in the terminal. 
+### Run the tests
+- Run ``npm run test`` or ``npm run testwatch`` in the terminal. 
 
 ## ✒️  Authors <a name = "author"></a>
 
