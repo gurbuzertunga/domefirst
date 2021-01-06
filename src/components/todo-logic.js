@@ -4,22 +4,28 @@ import { clearForm, populateDom } from "./populate-dom";
 import store from "./local-storage";
 
 const selectChangePri = () => {
-  el.toDoPri.addEventListener("change", () => {
-    el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
-  });
+  if(el.toDoPri){
+    el.toDoPri.addEventListener("change", () => {
+      el.priValue = el.toDoPri.options[el.toDoPri.selectedIndex];
+    });
+  }
   return el.priValue;
 };
 
 selectChangePri();
 
 const selectChangePro = () => {
-  el.projectTitles.addEventListener("change", () => {
-    el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
-  });
+  if (el.projectTitles) {
+    el.projectTitles.addEventListener("change", () => {
+      el.proValue = el.projectTitles.options[el.projectTitles.selectedIndex];
+    });
+  }
   return el.proValue;
 };
 
 selectChangePro();
+
+console.log(el.priValue);
 
 class ToDo extends Project {
   constructor(title, toDoTitle, description, priority, dueDate) {
@@ -32,46 +38,48 @@ class ToDo extends Project {
 }
 
 const showToDoDetails = () => {
-  el.ongoingToDos.addEventListener("click", (e) => {
-    const tblRow1 = document.createElement("tr");
-    tblRow1.setAttribute("class", "bg-white border-4 border-gray-200");
-    if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
-        el.topWrapper.appendChild(el.detailsTbl);
-        store.getToDoFromStore().forEach((toDo) => {
-          if (
-            e.target.parentElement.parentElement.textContent === toDo.toDoTitle
-          ) {
-            const tBody = [
-              toDo.toDoTitle,
-              toDo.description,
-              toDo.dueDate,
-              toDo.priority,
-            ];
-            tBody.forEach((prop) => {
-              const tBodyData = document.createElement('td');
-              tBodyData.setAttribute(
-                'class',
-                'px-16 py-2 items-center border border-gray-500',
-              );
-              tBodyData.textContent = prop;
-              tblRow1.appendChild(tBodyData);
-              el.tblBody.appendChild(tblRow1);
-            });
+  if (el.ongoingToDos) {
+    el.ongoingToDos.addEventListener("click", (e) => {
+      const tblRow1 = document.createElement("tr");
+      tblRow1.setAttribute("class", "bg-white border-4 border-gray-200");
+      if (e.target.className === "fas fa-angle-down fa-2x cursor-pointer") {
+          el.topWrapper.appendChild(el.detailsTbl);
+          store.getToDoFromStore().forEach((toDo) => {
+            if (
+              e.target.parentElement.parentElement.textContent === toDo.toDoTitle
+            ) {
+              const tBody = [
+                toDo.toDoTitle,
+                toDo.description,
+                toDo.dueDate,
+                toDo.priority,
+              ];
+              tBody.forEach((prop) => {
+                const tBodyData = document.createElement('td');
+                tBodyData.setAttribute(
+                  'class',
+                  'px-16 py-2 items-center border border-gray-500',
+                );
+                tBodyData.textContent = prop;
+                tblRow1.appendChild(tBodyData);
+                el.tblBody.appendChild(tblRow1);
+              });
+            }
+          });
+  
+          el.detailsTbl.style.display = 'table';
+          e.target.className = 'fas fa-angle-up fa-2x cursor-pointer';
+        } else if (e.target.className === 'fas fa-angle-up fa-2x cursor-pointer') {
+          el.detailsTbl.style.display = 'none';
+  
+          while (el.tblBody.firstChild) {
+            el.tblBody.removeChild(el.tblBody.lastChild);
           }
-        });
-
-        el.detailsTbl.style.display = 'table';
-        e.target.className = 'fas fa-angle-up fa-2x cursor-pointer';
-      } else if (e.target.className === 'fas fa-angle-up fa-2x cursor-pointer') {
-        el.detailsTbl.style.display = 'none';
-
-        while (el.tblBody.firstChild) {
-          el.tblBody.removeChild(el.tblBody.lastChild);
-        }
-
-        e.target.className = 'fas fa-angle-down fa-2x cursor-pointer';
-    }
-  });
+  
+          e.target.className = 'fas fa-angle-down fa-2x cursor-pointer';
+      }
+    });
+  }
 };
 
 const editToDo = () => {
@@ -93,7 +101,7 @@ const editToDo = () => {
         if (toDo.toDoTitle === a) {
           el.toDoTitle.value = toDo.toDoTitle;
           el.toDoDesc.value = toDo.description;
-          el.priValue.textContent = toDo.priority;
+          el.priValue.value = toDo.priority;
           el.proValue.value = toDo.title;
           el.toDoDate.value = toDo.dueDate;
         }

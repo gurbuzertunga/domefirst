@@ -1,7 +1,8 @@
-import { toDo } from '../src/components/todo-logic';
+import { ToDo } from '../src/components/todo-logic';
 
 describe('toDo logic tests', () => {
-  test('toDo class is defined', () => {
-    expect(ToDo()).not.toBeUnDefined();
+  const ourToDo = new ToDo();
+  test('can create instance of class ToDo', () => {
+    expect(ourToDo).toBeInstanceOf(ToDo);
   });
 });
