@@ -16,8 +16,9 @@ describe('Testing store class', () => {
 
   test('local storage setItem() works fine', () => {
     const myMock = jest.fn(() => localStorage.setItem({Name: "Ezekiel"}));
-    store.updateToDoInStore = () => myMock();
-    expect(myMock).toHaveBeenCalled();
+    myMock();
+    myMock();
+    expect(myMock).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -37,10 +37,5 @@
     "postcss-loader": "^4.1.0",
     "style-loader": "^2.0.0",
     "tailwindcss": "^2.0.2"
-  },
-  "jest": {
-    "setupFiles": [
-      "mocks.js"
-    ]
   }
 }
