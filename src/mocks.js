@@ -1,13 +1,17 @@
 class LSMock {
   constructor() {
-    this.store = {};
+    this.store = [];
   }
-  setItem (key, value) { this.store[key] = value };
-  getItem (key) { this.store[key] };
-  clear () { this.store = {} };
-  removeItem (key) { delete this.store[key]};
-};
+
+  setItem(obj) { this.store.push(obj); }
+
+  getItem() { return this.store; }
+
+  clear() { this.store = []; }
+
+  removeItem(obj) { this.store.splice(this.store.indexOf(obj), 1); }
+
+  updateItem(oldObj, newObj) { this.store.splice(this.store.indexOf(oldObj), 1, newObj); }
+}
 
 export default LSMock;
-
-

@@ -49,7 +49,6 @@ detailsArr.forEach((heading) => {
 const tblBody = document.createElement('tbody');
 tblBody.setAttribute('class', 'bg-gray-200');
 detailsTbl.appendChild(tblBody);
-// topWrapper.appendChild(detailsTbl);
 
 export {
   toDos,

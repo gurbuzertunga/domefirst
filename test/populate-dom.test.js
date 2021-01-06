@@ -6,7 +6,7 @@ describe('Test PopulateDom', () => {
   });
   test('Populate returns empty string', () => {
     expect(populateDom()).toBe('');
-  })
+  });
 });
 
 describe('Test populateDomByProject', () => {

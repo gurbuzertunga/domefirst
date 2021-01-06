@@ -1,20 +1,20 @@
-import * as el from "./dom-elements";
+import * as el from './dom-elements';
 
 const store = (() => {
   const getToDoFromStore = () => {
-    if (localStorage.getItem("localToDos") === null) {
+    if (localStorage.getItem('localToDos') === null) {
       el.myToDos = [];
     } else {
-      el.myToDos = JSON.parse(localStorage.getItem("localToDos"));
+      el.myToDos = JSON.parse(localStorage.getItem('localToDos'));
     }
     return el.myToDos;
   };
 
   const getProjectFromStore = () => {
-    if (localStorage.getItem("localProjects") === null) {
+    if (localStorage.getItem('localProjects') === null) {
       el.myProjects = [];
     } else {
-      el.myProjects = JSON.parse(localStorage.getItem("localProjects"));
+      el.myProjects = JSON.parse(localStorage.getItem('localProjects'));
     }
     return el.myProjects;
   };
@@ -23,13 +23,13 @@ const store = (() => {
     el.myToDos = store.getToDoFromStore();
     el.myToDos.push(toDo);
 
-    localStorage.setItem("localToDos", JSON.stringify(el.myToDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.myToDos));
   };
 
   const addProjectToStore = (project) => {
     el.myProjects = store.getProjectFromStore();
     el.myProjects.push(project);
-    localStorage.setItem("localProjects", JSON.stringify(el.myProjects));
+    localStorage.setItem('localProjects', JSON.stringify(el.myProjects));
   };
 
   const removeToDoFromStore = (title) => {
@@ -39,7 +39,7 @@ const store = (() => {
         el.myToDos.splice(el.myToDos.indexOf(toDo), 1);
       }
     });
-    localStorage.setItem("localToDos", JSON.stringify(el.myToDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.myToDos));
   };
 
   const removeProjectFromStore = (title) => {
@@ -49,7 +49,7 @@ const store = (() => {
         el.myProjects.splice(index, 1);
       }
     });
-    localStorage.setItem("localProjects", JSON.stringify(el.myProjects));
+    localStorage.setItem('localProjects', JSON.stringify(el.myProjects));
   };
 
   const updateToDoInStore = (newToDo, oldToDo) => {
@@ -60,7 +60,7 @@ const store = (() => {
       }
     });
 
-    localStorage.setItem("localToDos", JSON.stringify(el.myToDos));
+    localStorage.setItem('localToDos', JSON.stringify(el.myToDos));
   };
 
   return {
