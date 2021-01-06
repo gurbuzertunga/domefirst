@@ -21,5 +21,19 @@ describe('Testing store class', () => {
     myMock();
     expect(myMock).toHaveBeenCalledTimes(2);
   });
+
+  test('local storage getItem() works fine', () => {
+    const myMock = jest.fn(() => localStorage.getItem('Name'));
+    myMock();
+    myMock();
+    expect(myMock).toHaveBeenCalledTimes(2);
+  });
+
+  test('local storage removeItem() works fine', () => {
+    const myMock = jest.fn(() => localStorage.removeItem('Name'));
+    myMock();
+    myMock();
+    expect(myMock).toHaveBeenCalledTimes(2);
+  });
 });
 
