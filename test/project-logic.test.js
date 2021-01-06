@@ -7,6 +7,6 @@ describe('test project logic', () => {
   });
 
   test('can create instance of Project class', () => {
-    expect(Project).toBeDefined();
+    expect(ourProject).toBeInstanceOf(Project);
   });
 });
