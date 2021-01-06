@@ -4,6 +4,7 @@ import LSMock from '../src/mocks';
 const localStorage = new LSMock();
 
 describe('Testing store class', () => {
+  
   beforeEach(() => localStorage.clear());
 
   test('getToDoFromStore returns Array instance', () => {
@@ -18,7 +19,7 @@ describe('Testing store class', () => {
     const myMock = jest.fn(() => localStorage.setItem({Name: "Ezekiel"}));
     myMock();
     myMock();
-    expect(myMock).toHaveBeenCalledTimes(1);
+    expect(myMock).toHaveBeenCalledTimes(2);
   });
 });
 

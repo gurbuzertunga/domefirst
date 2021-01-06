@@ -35,9 +35,9 @@ const populateDomByProject = () => {
 };
 
 const populateDom = () => {
-  while (el.ongoingToDos.firstChild) {
-    el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
-  }
+  // while (el.ongoingToDos.firstChild) {
+  //   el.ongoingToDos.removeChild(el.ongoingToDos.firstChild);
+  // }
 
   Array.from(store.getToDoFromStore()).forEach((toDo) => {
     const newToDo = document.createElement('li');
@@ -93,7 +93,7 @@ const populateDom = () => {
   });
   populateDomByProject();
 
-  console.log(el.proValue);
+  return el.proValue;
 };
 
 const clearForm = () => {
