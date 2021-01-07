@@ -21,7 +21,7 @@ let toDos = [];
 let projects = [];
 let myToDos = [];
 let myProjects = [];
-let priValue = toDoPri.options[toDoPri.selectedIndex];
+let priValue;
 let newProject;
 let formProject;
 let proValue = '';
@@ -31,9 +31,7 @@ let proValue = '';
 // Table Elements
 const detailsTbl = document.createElement('table');
 detailsTbl.setAttribute('class', 'w-4/5 table-auto mx-auto my-5');
-document
-  .querySelector('.container')
-  .insertAdjacentElement('afterend', detailsTbl);
+const topWrapper = document.querySelector('.container');
 detailsTbl.style.display = 'none';
 const tblHead = document.createElement('thead');
 tblHead.setAttribute('class', 'justify-between text-white');
@@ -79,4 +77,5 @@ export {
   myToDos,
   myProjects,
   toDoEdit,
+  topWrapper,
 };

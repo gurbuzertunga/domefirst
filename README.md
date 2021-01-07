@@ -21,6 +21,7 @@ A digital todo list application to keep track of your todo tasks.
 <a href="#usage">Usage</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#app">App</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#with">Built With</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#test">Tested With</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#author">Author</a>
 
 
@@ -65,6 +66,13 @@ With the installations above complete, you are set to use the code and view the 
 - Change directory into the directory where you cloned the repository. Forexample ``vanheaven@vanheaven-VirtualBox:~/Microverse-projects$ cd private-event.``
 - Run ``npm run watch`` to start webpack bundling.
 - When complete, open the index.html file using your browser.
+
+## Tested With <a name = "test"></a>
+### Tools used:
+- Jest.
+
+### Run the tests
+- Run ``npm run test`` or ``npm run testwatch`` in the terminal. 
 
 ## ✒️  Authors <a name = "author"></a>
 
